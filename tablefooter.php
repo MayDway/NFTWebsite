@@ -1,8 +1,8 @@
 		<div class="footer-wrap pd-20 mb-20 card-box">
-					DeskApp - Bootstrap 4 Admin Template By
-					<a href="https://github.com/dropways" target="_blank"
+					<i>&copy;copyright from The Bat Creation 2023</i>
+					<!-- <a href="https://github.com/dropways" target="_blank"
 						>Ankit Hingarajiya</a
-					>
+					> -->
 				</div>
 			</div>
 		</div>
@@ -76,9 +76,7 @@
 				<i class="fa fa-html5"></i>
 			</div>
 		</div>
-		<button class="welcome-modal-btn">
-			<i class="fa fa-download"></i> Download
-		</button>
+		
 		<!-- welcome modal end -->
 		<!-- js -->
 		<script src="vendors/scripts/core.js"></script>

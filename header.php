@@ -3,10 +3,10 @@
 	<head>
 		<!-- Basic Page Info -->
 		<meta charset="utf-8" />
-		<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+		<title>NFT Website Admin Dashboard</title>
 
 		<!-- Site favicon -->
-		<link
+		<!-- <link
 			rel="apple-touch-icon"
 			sizes="180x180"
 			href="vendors/images/apple-touch-icon.png"
@@ -22,7 +22,7 @@
 			type="image/png"
 			sizes="16x16"
 			href="vendors/images/favicon-16x16.png"
-		/>
+		/> -->
 
 		<!-- Mobile Specific Metas -->
 		<meta

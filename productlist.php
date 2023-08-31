@@ -77,7 +77,8 @@
 							<table class="data-table table stripe hover nowrap">
 								<thead>
 									<tr>
-										<th class="table-plus datatable-nosort">Product Name</th>
+										<th class="table-plus">No</th>
+										<th class="">Product Name</th>
 										
 										<th>description</th>
 										<th>price</th>
@@ -92,7 +93,8 @@
 						{
 					?>
 									<tr>
-										<td class="table-plus"><?php echo $dtrecord['name']; ?></td>
+										<td class="table-plus"><?php echo $dtrecord['product_id']; ?></td>
+										<td><?php echo $dtrecord['name']; ?></td>
 										<td><?php echo $dtrecord['description']; ?></td>
 										<td><?php echo $dtrecord['price']; ?></td>
 										<td><?php echo $dtrecord['holding']; ?></td>

@@ -87,7 +87,7 @@
 							<i class="icon-copy dw dw-notification"></i>
 							<span class="badge notification-active"></span>
 						</a>
-						<div class="dropdown-menu dropdown-menu-right">
+						<!-- <div class="dropdown-menu dropdown-menu-right">
 							<div class="notification-list mx-h-350 customscroll">
 								<ul>
 									<li>
@@ -152,9 +152,9 @@
 									</li>
 								</ul>
 							</div>
-						</div>
+						</div>-->
 					</div>
-				</div>
+				</div> 
 				<div class="user-info-dropdown">
 					<div class="dropdown">
 						<a
@@ -164,9 +164,9 @@
 							data-toggle="dropdown"
 						>
 							<span class="user-icon">
-								<img src="vendors/images/photo1.jpg" alt="" />
+								<!-- <img src="vendors/images/photo1.jpg" alt="" /> -->
 							</span>
-							<span class="user-name">Ross C. Lopez</span>
+							<span class="user-name">Admin</span>
 						</a>
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
@@ -186,10 +186,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="github-link">
-					<a href="https://github.com/dropways/deskapp" target="_blank"
-						><img src="vendors/images/github.svg" alt=""
-					/></a>
-				</div>
+				
 			</div>
 		</div>

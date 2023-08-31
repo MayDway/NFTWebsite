@@ -12,7 +12,7 @@
 		break;
 
 		case 'userentry':
-		$mainpage='form-basic.html';
+		$mainpage='user.php';
 		break;
 
 		case 'productlist':
