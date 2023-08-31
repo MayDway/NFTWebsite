@@ -1,23 +1,7 @@
-		<!-- header.php -->
+			<!-- header.php -->
 		<?php include('header.php'); ?>
 		<!--------------->
-<!-- CSS -->
-		<link rel="stylesheet" type="text/css" href="vendors/styles/core.css" />
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="vendors/styles/icon-font.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="src/plugins/datatables/css/dataTables.bootstrap4.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="src/plugins/datatables/css/responsive.bootstrap4.min.css"
-		/>
+
 		<!-- loader -->
 		<?php include('loader.php'); ?>
 		<!------------>
@@ -37,10 +21,8 @@
 		<div class="mobile-menu-overlay"></div>
 
 		<div class="main-container">
-			<div class="xs-pd-20-10 pd-ltr-20">
-				
-
-		<div class="min-height-200px">
+			<div class="pd-ltr-20 xs-pd-20-10">
+				<div class="min-height-200px">
 					<div class="page-header">
 						<div class="row">
 							<div class="col-md-6 col-sm-12">
@@ -95,21 +77,25 @@
 							<table class="data-table table stripe hover nowrap">
 								<thead>
 									<tr>
-										<th class="table-plus datatable-nosort">Name</th>
-										<th>Description</th>
-										<th>Price</th>
-										<th>Holding Time</th>
+										<th class="table-plus datatable-nosort">Product Name</th>
 										
+										<th>description</th>
+										<th>price</th>
+										<th>Holding Time</th>
 										<th class="datatable-nosort">Action</th>
 									</tr>
 								</thead>
 								<tbody>
+									<?php
+					$saprod=mysqli_query($conn,"SELECT * FROM products Order By product_id DESC");
+					while($dtrecord=mysqli_fetch_assoc($saprod))
+						{
+					?>
 									<tr>
-										<?php $a=1; ?>
-										<td class="table-plus">Gloria F. Mead</td>
-										<td><?php echo $a; ?></td>
-										<td>Sagittarius</td>
-										<td>2829 Trainer Avenue Peoria, IL 61602</td>
+										<td class="table-plus"><?php echo $dtrecord['name']; ?></td>
+										<td><?php echo $dtrecord['description']; ?></td>
+										<td><?php echo $dtrecord['price']; ?></td>
+										<td><?php echo $dtrecord['holding']; ?></td>
 										
 										<td>
 											<div class="dropdown">
@@ -137,8 +123,9 @@
 											</div>
 										</td>
 									</tr>
-									
-									
+									<?php
+									}
+									?>
 								</tbody>
 							</table>
 						</div>
@@ -146,29 +133,8 @@
 					<!-- Simple Datatable End -->
 					
 					
-					
 				</div>
 				
-<!-- buttons for Export datatable -->
-		<script src="src/plugins/datatables/js/dataTables.buttons.min.js"></script>
-		<script src="src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
-		<script src="src/plugins/datatables/js/buttons.print.min.js"></script>
-		<script src="src/plugins/datatables/js/buttons.html5.min.js"></script>
-		<script src="src/plugins/datatables/js/buttons.flash.min.js"></script>
-		<script src="src/plugins/datatables/js/pdfmake.min.js"></script>
-		<script src="src/plugins/datatables/js/vfs_fonts.js"></script>
-		<!-- Datatable Setting js -->
-		<script src="vendors/scripts/datatable-setting.js"></script>
-		<!-- Google Tag Manager (noscript) -->
-		<noscript
-			><iframe
-				src="https://www.googletagmanager.com/ns.html?id=GTM-NXZMQSS"
-				height="0"
-				width="0"
-				style="display: none; visibility: hidden"
-			></iframe
-		></noscript>
-		<!-- End Google Tag Manager (noscript) -->
-		<!--- footer --->
-		<?php include('footer.php'); ?>
-		<!-------------->
+<!--- footer --->
+	<?php include('tablefooter.php'); ?>
+<!-------------->
