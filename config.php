@@ -11,6 +11,14 @@
 		$mainpage='productlist.php';
 		break;
 
+		case 'userentry':
+		$mainpage='form-basic.html';
+		break;
+
+		case 'productlist':
+		$mainpage='productlist.php';
+		break;
+
 		default:
 		$mainpage='home.php';
 	}

@@ -34,7 +34,7 @@
 							<ul class="submenu">
 								<li><a href="index.php?page=productentry">Product</a></li>
 								<li>
-									<a href="advanced-components.html">Advanced Components</a>
+									<a href="index.php?page=userentry">User</a>
 								</li>
 								<li><a href="form-wizard.html">Form Wizard</a></li>
 								<li><a href="html5-editor.html">HTML5 Editor</a></li>
