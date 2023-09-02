@@ -21,6 +21,60 @@
 		<?php include('leftsidebar.php'); ?>
 		<!--------------------->
 
+		<?php
+		
+
+	if(isset($_POST['create']))
+	{
+		$account_no=$_POST['account_no'];
+		$username=$_POST['username'];
+		$password=$_POST['password'];
+		$usertype=$_POST['usertype'];
+		$phone=$_POST['phone'];
+		$address=$_POST['address'];
+		$balance=$_POST['balance'];
+		$status=$_POST['status'];
+
+		// var_dump($account_no);
+		// var_dump($username);
+		// var_dump($password);
+		// var_dump($usertype);
+		// var_dump($phone);
+		// var_dump($address);
+		// var_dump($balance);
+		// var_dump($status);
+		// $sql = "INSERT INTO `user`(account_number,usertype,username,password,phone,address,balance,top_score,income,outcome,status) Values('$account_no','$usertype','$username','$password','$phone','$address','$balance',0,0,0,'$status')";
+		// var_dump($sql);
+		// exit();
+
+		$sql=mysqli_query($conn,"SELECT * FROM `user` WHERE username='$username'");
+		$dtrow1=mysqli_num_rows($sql);
+
+		if($dtrow1>0)
+		{
+			echo "<script>alert('This User is already Saved!!');
+			window.location.href='index.php?page=user';
+			</script>";
+		}
+
+		else
+		{
+
+			$inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,password,phone,address,balance,status) Values('$account_no','$usertype','$username','$password','$phone','$address','$balance','$status')");
+			
+			
+
+			
+			if($inspd)
+			{
+				echo "<script>alert('Successfully Saved!');
+				window.location.href='index.php?page=userlist';
+				</script>";
+			}
+		}
+	}
+		?>
+
 
 		<div class="mobile-menu-overlay"></div>
 
@@ -132,7 +186,7 @@
 								>
 							</div> -->
 						</div>
-						<form>
+						<form method='POST'>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Name</label>
 								<div class="col-sm-12 col-md-10">
@@ -140,6 +194,7 @@
 										class="form-control"
 										type="text"
 										placeholder="Johnny Brown"
+										name="username"
 									/>
 								</div>
 							</div>
@@ -152,6 +207,7 @@
 										class="form-control"
 										value=""
 										type="password"
+										name="password"
 									/>
 								</div>
 							</div>
@@ -162,16 +218,17 @@
 										class="form-control"
 										type="text"
 										placeholder="Account No"
+										name="account_no"
 									/>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">User Type</label>
 								<div class="col-sm-12 col-md-10">
-									<select class="custom-select col-12">
+									<select class="custom-select col-12" name="usertype">
 										<option selected="">Choose...</option>
-										<option value="1">User</option>
-										<option value="2">Agent</option>
+										<option value="customer">Customer</option>
+										<option value="agent">Agent</option>
 									</select>
 								</div>
 							</div>
@@ -180,8 +237,9 @@
 								<div class="col-sm-12 col-md-10">
 									<input
 										class="form-control"
-										type="tel"
+										type="number"
 										placeholder="Phone"
+										name="phone"
 									/>
 								</div>
 							</div>
@@ -192,6 +250,7 @@
 										class="form-control"
 										type="text"
 										placeholder="Address"
+										name="address"
 									/>
 								</div>
 							</div>
@@ -200,12 +259,13 @@
 								<div class="col-sm-12 col-md-10">
 									<input
 										class="form-control"
+										name="balance"
 										placeholder="Balance"
-										type="text"
+										type="number"
 									/>
 								</div>
 							</div>
-							<div class="form-group row">
+							<!-- <div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Top Score</label>
 								<div class="col-sm-12 col-md-10">
 									<input
@@ -236,18 +296,18 @@
 										type="text"
 									/>
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Status</label>
 								<div class="col-sm-12 col-md-10">
-									<select class="custom-select col-12">
+									<select class="custom-select col-12" name="status">
 										<option selected="">Choose...</option>
 										<option value="pending">Pending</option>
 										<option value="confirm">Confirm</option>
 									</select>
 								</div>
 							</div>
-							<button type="submit" class="btn btn-success">Save</button>
+							<button type="submit" class="btn btn-success" name="create">Save</button>
 							<!-- <a href="">Save</a> -->
 							<!-- <div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Number</label>

@@ -52,6 +52,7 @@
 							<ul class="submenu">
 								<!-- <li><a href="basic-table.html">Basic Tables</a></li> -->
 								<li><a href="index.php?page=productlist">Product List</a></li>
+								<li><a href="index.php?page=userlist">User List</a></li>
 							</ul>
 						</li>
 						<!-- <li>
