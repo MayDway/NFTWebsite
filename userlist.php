@@ -1,5 +1,5 @@
 			<!-- header.php -->
-		<?php include('header.php'); ?>
+            <?php include('header.php'); ?>
 		<!--------------->
 
 		<!-- loader -->
@@ -27,7 +27,7 @@
 						<div class="row">
 							<div class="col-md-6 col-sm-12">
 								<div class="title">
-									<h4>Product List</h4>
+									<h4>User List</h4>
 								</div>
 								<nav aria-label="breadcrumb" role="navigation">
 									<ol class="breadcrumb">
@@ -35,7 +35,7 @@
 											<a href="index.html">Home</a>
 										</li>
 										<li class="breadcrumb-item active" aria-current="page">
-											Product List
+											User List
 										</li>
 									</ol>
 								</nav>
@@ -62,7 +62,7 @@
 					<!-- Simple Datatable start -->
 					<div class="card-box mb-30">
 						<div class="pd-20">
-							<h4 class="text-blue h4">Product List</h4>
+							<h4 class="text-blue h4">User List</h4>
 							<!-- <p class="mb-0">
 								you can find more options
 								<a
@@ -78,26 +78,40 @@
 								<thead>
 									<tr>
 										<th class="table-plus">No</th>
-										<th class="">Product Name</th>
-										
-										<th>description</th>
-										<th>price</th>
-										<th>Holding Time</th>
+										<th class="">Account</th>
+										<th class="">Username</th>
+										<th class="">Password</th>
+										<th class="">Phone</th>
+										<th class="">Address</th>
+										<th class="">Usertype</th>
+										<th class="">Balance</th>
+										<th class="">Top Score</th>
+										<th class="">Income</th>
+										<th class="">Outcome</th>
+										<th class="">Status</th>
 										<th class="datatable-nosort">Action</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
-					$saprod=mysqli_query($conn,"SELECT * FROM products Order By product_id DESC");
-					while($dtrecord=mysqli_fetch_assoc($saprod))
+									$a =1;
+					$sql=mysqli_query($conn,"SELECT * FROM `user` WHERE usertype = 'agent' OR usertype = 'customer'");
+					while($dtrecord=mysqli_fetch_assoc($sql))
 						{
 					?>
 									<tr>
-										<td class="table-plus"><?php echo $dtrecord['product_id']; ?></td>
-										<td><?php echo $dtrecord['name']; ?></td>
-										<td><?php echo $dtrecord['description']; ?></td>
-										<td><?php echo $dtrecord['price']; ?></td>
-										<td><?php echo $dtrecord['holding']; ?></td>
+										<td class="table-plus"><?php echo $a++; ?></td>
+										<td><?php echo $dtrecord['account_number']; ?></td>
+										<td><?php echo $dtrecord['username']; ?></td>
+										<td><?php echo $dtrecord['password']; ?></td>
+										<td><?php echo $dtrecord['phone']; ?></td>
+										<td><?php echo $dtrecord['address']; ?></td>
+										<td><?php echo $dtrecord['usertype']; ?></td>
+										<td><?php echo $dtrecord['balance']; ?></td>
+										<td><?php echo $dtrecord['top_score']; ?></td>
+										<td><?php echo $dtrecord['income']; ?></td>
+										<td><?php echo $dtrecord['outcome']; ?></td>
+										<td><?php echo $dtrecord['status']; ?></td>
 										
 										<td>
 											<div class="dropdown">

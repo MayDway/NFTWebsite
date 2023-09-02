@@ -12,11 +12,15 @@
 		break;
 
 		case 'userentry':
-		$mainpage='form-basic.html';
+		$mainpage='userentry.php';
 		break;
 
 		case 'productlist':
 		$mainpage='productlist.php';
+		break;
+
+		case 'userlist':
+		$mainpage='userlist.php';
 		break;
 
 		default:
