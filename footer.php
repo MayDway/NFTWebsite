@@ -79,6 +79,8 @@
 		
 		<!-- welcome modal end -->
 		<!-- js -->
+		<script src="src/scripts/user_form.js"></script>
+		<script src="src/scripts/product_form.js"></script>
 		<script src="vendors/scripts/core.js"></script>
 		<script src="vendors/scripts/script.min.js"></script>
 		<script src="vendors/scripts/process.js"></script>

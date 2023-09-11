@@ -54,6 +54,9 @@
 		/>
 		<link rel="stylesheet" type="text/css" href="vendors/styles/style.css" />
 
+		<link rel="stylesheeet" type="text/css" href="src/styles/user_form.css" />
+		<link rel="stylesheeet" type="text/css" href="src/styles/product_form.css" />
+
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script
 			async
