@@ -8,8 +8,15 @@
 	if($_REQUEST['page']=='productentry' && isset($_POST['btnsave']))
 	{
 		$productname=$_POST['productname'];
+		$title=$_POST['title'];
 		$description=$_POST['desc'];
 		$price=$_POST['price'];
+
+		$image = $_FILES['image']['name'];
+		$tmp_img = $_FILES['image']['tmp_name'];
+		$target_dir = "src/images/products/";
+		$target_file = $target_dir . basename($_FILES['image']['name']);
+		move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
 		
 
 		$selectpd=mysqli_query($conn,"SELECT * FROM products WHERE name='$productname'");
@@ -25,7 +32,7 @@
 		else
 		{
 
-			$inspd=mysqli_query($conn,"Insert into products(name,description,price) Values('$productname','$description','$price')");
+			$inspd=mysqli_query($conn,"Insert into products(title,name,image,description,price) Values('$title','$productname','$image','$description','$price')");
 			
 			
 
@@ -57,7 +64,12 @@
 		<?php include('leftsidebar.php'); ?>
 		<!--------------------->
 
-		
+		<style>
+			#preview{
+				width: 180px;
+				height: 180px;
+			}
+		</style>
 
 <div class="main-container">
 			<div class="pd-ltr-20 xs-pd-20-10">
@@ -103,11 +115,23 @@
 						<div class="clearfix">
 							<div class="pull-left">
 								<h4 class="text-blue h4">Product Entry Forms</h4>
-								<p class="mb-30">Enter Product Detail for Customer</p>
+								<!-- <p class="mb-30">Enter Product Detail for Customer</p> -->
+								<img src="" id="preview" class="rounded-circle" alt="Preview">
 							</div>
 							
 						</div>
-						<form method="post">
+						<form method="post" id="productForm" enctype="multipart/form-data">
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">Product Title</label>
+								<div class="col-sm-12 col-md-10">
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="title"
+									/>
+								</div>
+							</div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Product Name</label>
 								<div class="col-sm-12 col-md-10">
@@ -117,6 +141,12 @@
 										placeholder=""
 										name="productname"
 									/>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">Product Photo</label>
+								<div class="col-sm-12 col-md-10">
+									<input type="file" id="p_image" name="image" class="form-control">
 								</div>
 							</div>
 							<div class="form-group row">

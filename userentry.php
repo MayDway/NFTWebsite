@@ -35,6 +35,13 @@
 		$balance=$_POST['balance'];
 		$status=$_POST['status'];
 
+
+		// $image = $_FILES['image']['name'];
+		// $tmp_img = $_FILES['image']['tmp_name'];
+		// $target_dir = "src/images/users/";
+		// $target_file = $target_dir . basename($_FILES['image']['name']);
+		// move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+
 		// var_dump($account_no);
 		// var_dump($username);
 		// var_dump($password);
@@ -60,7 +67,8 @@
 		else
 		{
 
-			$inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,password,phone,address,balance,status) Values('$account_no','$usertype','$username','$password','$phone','$address','$balance','$status')");
+			// $inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,image,password,phone,address,balance,status) Values('$account_no','$usertype','$username','$image','$password','$phone','$address','$balance','$status')");
+			$inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,password,balance,status) Values('$account_no','$usertype','$username','$password','$balance','$status')");
 			
 			
 
@@ -74,6 +82,13 @@
 		}
 	}
 		?>
+
+		<style>
+			#previewImage{
+				width: 180px;
+				height: 180px;
+			}
+		</style>
 
 
 		<div class="mobile-menu-overlay"></div>
@@ -173,6 +188,8 @@
 						<div class="clearfix">
 							<div class="pull-left" id="create">
 								<h4 class="text-blue h4">User Form</h4>
+								<!-- <img id="previewImage" src="src/images/users/user-default.png" class="rounded-circle" alt="Preview Image"> -->
+								<img id="previewImage" class="rounded-circle" alt="Preview Image">
 								<!-- <p class="mb-30">All bootstrap element classies</p> -->
 							</div>
 							<!-- <div class="pull-right">
@@ -186,7 +203,7 @@
 								>
 							</div> -->
 						</div>
-						<form method='POST'>
+						<form method='POST' id="imageForm" enctype="multipart/form-data">
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Name</label>
 								<div class="col-sm-12 col-md-10">
@@ -209,6 +226,15 @@
 										type="password"
 										name="password"
 									/>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label"
+									>Photo</label
+								>
+								<div class="col-sm-12 col-md-10">
+									<input type="file" id="imageInput" name="image" class="form-control">
+									
 								</div>
 							</div>
 							<div class="form-group row">

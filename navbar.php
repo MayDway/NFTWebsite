@@ -87,7 +87,7 @@
 							<i class="icon-copy dw dw-notification"></i>
 							<span class="badge notification-active"></span>
 						</a>
-						<!-- <div class="dropdown-menu dropdown-menu-right">
+						<div class="dropdown-menu dropdown-menu-right">
 							<div class="notification-list mx-h-350 customscroll">
 								<ul>
 									<li>
@@ -152,7 +152,7 @@
 									</li>
 								</ul>
 							</div>
-						</div>-->
+						</div>
 					</div>
 				</div> 
 				<div class="user-info-dropdown">
