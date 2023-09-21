@@ -22,6 +22,8 @@
 		<!--------------------->
 
 		<?php
+
+        $account_id = rand(5,10000);
 		
 
 	if(isset($_POST['create']))
@@ -34,6 +36,8 @@
 		$address=$_POST['address'];
 		$balance=$_POST['balance'];
 		$status=$_POST['status'];
+		$account_id=$_POST['account_id'];
+		$control=$_POST['control'];
 
 
 		// $image = $_FILES['image']['name'];
@@ -68,7 +72,7 @@
 		{
 
 			// $inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,image,password,phone,address,balance,status) Values('$account_no','$usertype','$username','$image','$password','$phone','$address','$balance','$status')");
-			$inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,password,balance,status) Values('$account_no','$usertype','$username','$password','$balance','$status')");
+			$inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,password,balance,status,control) Values('$account_no','$usertype','$username','$password','$balance','$status','$control')");
 			
 			
 
@@ -205,7 +209,21 @@
 						</div>
 						<form method='POST' id="imageForm" enctype="multipart/form-data">
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Name</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Account ID
+                                <button type="button" class="btn btn-info">Get ID</button>
+                                </label>
+								<div class="col-sm-12 col-md-10">
+
+									<input
+										class="form-control"
+										type="text"
+										placeholder=""
+										name="account_id"
+									/>
+								</div>
+							</div>
+                            <div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">Account Name</label>
 								<div class="col-sm-12 col-md-10">
 									<input
 										class="form-control"
@@ -237,17 +255,28 @@
 									
 								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Account Number</label>
-								<div class="col-sm-12 col-md-10">
-									<input
-										class="form-control"
-										type="text"
-										placeholder="Account No"
-										name="account_no"
-									/>
-								</div>
-							</div>
+<!--							<div class="form-group row">-->
+<!--								<label class="col-sm-12 col-md-2 col-form-label">Account Number</label>-->
+<!--								<div class="col-sm-12 col-md-10">-->
+<!--									<input-->
+<!--										class="form-control"-->
+<!--										type="text"-->
+<!--										placeholder="Account No"-->
+<!--										name="account_no"-->
+<!--									/>-->
+<!--								</div>-->
+<!--							</div>-->
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 col-form-label">Balance</label>
+                                <div class="col-sm-12 col-md-10">
+                                    <input
+                                            class="form-control"
+                                            name="balance"
+                                            placeholder="Balance"
+                                            type="number"
+                                    />
+                                </div>
+                            </div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">User Type</label>
 								<div class="col-sm-12 col-md-10">
@@ -258,39 +287,39 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Phone</label>
-								<div class="col-sm-12 col-md-10">
-									<input
-										class="form-control"
-										type="number"
-										placeholder="Phone"
-										name="phone"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Address</label>
-								<div class="col-sm-12 col-md-10">
-									<input
-										class="form-control"
-										type="text"
-										placeholder="Address"
-										name="address"
-									/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Balance</label>
-								<div class="col-sm-12 col-md-10">
-									<input
-										class="form-control"
-										name="balance"
-										placeholder="Balance"
-										type="number"
-									/>
-								</div>
-							</div>
+<!--							<div class="form-group row">-->
+<!--								<label class="col-sm-12 col-md-2 col-form-label">Phone</label>-->
+<!--								<div class="col-sm-12 col-md-10">-->
+<!--									<input-->
+<!--										class="form-control"-->
+<!--										type="number"-->
+<!--										placeholder="Phone"-->
+<!--										name="phone"-->
+<!--									/>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--							<div class="form-group row">-->
+<!--								<label class="col-sm-12 col-md-2 col-form-label">Address</label>-->
+<!--								<div class="col-sm-12 col-md-10">-->
+<!--									<input-->
+<!--										class="form-control"-->
+<!--										type="text"-->
+<!--										placeholder="Address"-->
+<!--										name="address"-->
+<!--									/>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--							<div class="form-group row">-->
+<!--								<label class="col-sm-12 col-md-2 col-form-label">Balance</label>-->
+<!--								<div class="col-sm-12 col-md-10">-->
+<!--									<input-->
+<!--										class="form-control"-->
+<!--										name="balance"-->
+<!--										placeholder="Balance"-->
+<!--										type="number"-->
+<!--									/>-->
+<!--								</div>-->
+<!--							</div>-->
 							<!-- <div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Top Score</label>
 								<div class="col-sm-12 col-md-10">
@@ -324,6 +353,17 @@
 								</div>
 							</div> -->
 							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">Control</label>
+								<div class="col-sm-12 col-md-10">
+									<select class="custom-select col-12" name="control">
+										<option selected="">Choose...</option>
+										<option value="win">Win</option>
+										<option value="lose">Lose</option>
+										<option value="random">Random</option>
+									</select>
+								</div>
+							</div>
+                            <div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Status</label>
 								<div class="col-sm-12 col-md-10">
 									<select class="custom-select col-12" name="status">
