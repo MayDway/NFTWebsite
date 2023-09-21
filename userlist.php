@@ -78,17 +78,20 @@
 								<thead>
 									<tr>
 										<th class="table-plus">No</th>
-										<th class="">Account</th>
-										<th class="">Username</th>
+										<th class="">Account ID</th>
+										<th class="">Account Name</th>
 										<th class="">Password</th>
-										<th class="">Phone</th>
-										<th class="">Address</th>
-										<th class="">Usertype</th>
+                                        <th class="">ID Card</th>
+<!--										<th class="">Phone</th>-->
+<!--										<th class="">Address</th>-->
 										<th class="">Balance</th>
-										<th class="">Top Score</th>
-										<th class="">Income</th>
-										<th class="">Outcome</th>
+										<th class="">Usertype</th>
+<!--										<th class="">Top Score</th>-->
+<!--										<th class="">Income</th>-->
+<!--										<th class="">Outcome</th>-->
+                                        <th class="">Control</th>
 										<th class="">Status</th>
+                                        <th class="">Register Time</th>
 										<th class="datatable-nosort">Action</th>
 									</tr>
 								</thead>
@@ -104,15 +107,18 @@
 										<td><?php echo $dtrecord['account_number']; ?></td>
 										<td><?php echo $dtrecord['username']; ?></td>
 										<td><?php echo $dtrecord['password']; ?></td>
-										<td><?php echo $dtrecord['phone']; ?></td>
-										<td><?php echo $dtrecord['address']; ?></td>
-										<td><?php echo $dtrecord['usertype']; ?></td>
+										<td><img src="src/images/<?php echo $dtrecord['image']; ?>"></td>
+<!--										<td>--><?php //echo $dtrecord['phone']; ?><!--</td>-->
+<!--										<td>--><?php //echo $dtrecord['address']; ?><!--</td>-->
 										<td><?php echo $dtrecord['balance']; ?></td>
-										<td><?php echo $dtrecord['top_score']; ?></td>
-										<td><?php echo $dtrecord['income']; ?></td>
-										<td><?php echo $dtrecord['outcome']; ?></td>
+										<td><?php echo $dtrecord['usertype']; ?></td>
+<!--										<td>--><?php //echo $dtrecord['top_score']; ?><!--</td>-->
+<!--										<td>--><?php //echo $dtrecord['income']; ?><!--</td>-->
+<!--										<td>--><?php //echo $dtrecord['outcome']; ?><!--</td>-->
+										<td><?php echo $dtrecord['control']; ?></td>
 										<td><?php echo $dtrecord['status']; ?></td>
-										
+										<td><?php echo $dtrecord['time']; ?></td>
+
 										<td>
 											<div class="dropdown">
 												<a
