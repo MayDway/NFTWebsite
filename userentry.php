@@ -22,8 +22,23 @@
 		<!--------------------->
 
 		<?php
+//        $sql = "Select * from `user`";
+//        $sql_run = mysqli_query($conn,$sql);
 
-        $account_id = rand(5,10000);
+        $sql_run=mysqli_query($conn,"SELECT * FROM `user`");
+        $length = mysqli_num_rows($sql_run);
+//        $row = mysqli_fetch_assoc($sql_run);
+//        $account_id = rand(5,10000);
+
+        $array = [];
+        while ($row = mysqli_fetch_assoc($sql_run)) {
+            $array[] = $row['account_number'];
+        }
+        do {
+            $account_id = rand(5, 100000); // Adjust the range as needed
+        } while (in_array($account_id, $array));
+
+
 		
 
 	if(isset($_POST['create']))
@@ -40,11 +55,11 @@
 		$control=$_POST['control'];
 
 
-		// $image = $_FILES['image']['name'];
-		// $tmp_img = $_FILES['image']['tmp_name'];
-		// $target_dir = "src/images/users/";
-		// $target_file = $target_dir . basename($_FILES['image']['name']);
-		// move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+		 $image = $_FILES['image']['name'];
+		 $tmp_img = $_FILES['image']['tmp_name'];
+		 $target_dir = "src/images/users/";
+		 $target_file = $target_dir . basename($_FILES['image']['name']);
+		 move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
 
 		// var_dump($account_no);
 		// var_dump($username);
@@ -58,7 +73,7 @@
 		// var_dump($sql);
 		// exit();
 
-		$sql=mysqli_query($conn,"SELECT * FROM `user` WHERE username='$username'");
+		$sql=mysqli_query($conn,"SELECT * FROM `user` WHERE account_number='$account_id'");
 		$dtrow1=mysqli_num_rows($sql);
 
 		if($dtrow1>0)
@@ -72,7 +87,7 @@
 		{
 
 			// $inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,image,password,phone,address,balance,status) Values('$account_no','$usertype','$username','$image','$password','$phone','$address','$balance','$status')");
-			$inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,password,balance,status,control) Values('$account_no','$usertype','$username','$password','$balance','$status','$control')");
+			$inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,image,password,balance,status,control) Values('$account_id','$usertype','$username','$image','$password','$balance','$status','$control')");
 			
 			
 
@@ -188,8 +203,8 @@
 						</div>
 					</div> -->
 					<div class="pd-20 card-box mb-30">
-						
-						<div class="clearfix">
+                        <form method='POST' id="imageForm" enctype="multipart/form-data">
+                        <div class="clearfix">
 							<div class="pull-left" id="create">
 								<h4 class="text-blue h4">User Form</h4>
 								<!-- <img id="previewImage" src="src/images/users/user-default.png" class="rounded-circle" alt="Preview Image"> -->
@@ -207,11 +222,25 @@
 								>
 							</div> -->
 						</div>
-						<form method='POST' id="imageForm" enctype="multipart/form-data">
+<!--						<form method='POST' id="imageForm" enctype="multipart/form-data">-->
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 col-form-label">Account Name <span style="color: red;"> *</span></label>
+                                <div class="col-sm-12 col-md-10">
+                                    <input
+                                            class="form-control"
+                                            type="text"
+                                            placeholder="Johnny Brown"
+                                            name="username"
+                                            autocomplete="off"
+                                            id="username"
+                                    />
+                                </div>
+                            </div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Account ID
-                                <button type="button" class="btn btn-info">Get ID</button>
+								<label class="col-sm-12 col-md-2 col-form-label">Account ID <span style="color: red;"> *</span>
+                                <button type="button" class="account_id btn btn-info" name="account_id" id="account_id">Get ID </button>
                                 </label>
+                                <input type="hidden" name="idd" id="idd" value="<?php echo $account_id; ?>">
 								<div class="col-sm-12 col-md-10">
 
 									<input
@@ -219,28 +248,21 @@
 										type="text"
 										placeholder=""
 										name="account_id"
-									/>
-								</div>
-							</div>
-                            <div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Account Name</label>
-								<div class="col-sm-12 col-md-10">
-									<input
-										class="form-control"
-										type="text"
-										placeholder="Johnny Brown"
-										name="username"
+                                        id="account"
+                                        value=""
+                                        readonly
 									/>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label"
-									>Password</label
+									>Password <span style="color: red;"> *</span></label
 								>
 								<div class="col-sm-12 col-md-10">
 									<input
 										class="form-control"
 										value=""
+                                        autocomplete="off"
 										type="password"
 										name="password"
 									/>
@@ -248,7 +270,7 @@
 							</div>
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label"
-									>Photo</label
+									>Photo <span style="color: red;"> *</span></label
 								>
 								<div class="col-sm-12 col-md-10">
 									<input type="file" id="imageInput" name="image" class="form-control">
@@ -267,7 +289,7 @@
 <!--								</div>-->
 <!--							</div>-->
                             <div class="form-group row">
-                                <label class="col-sm-12 col-md-2 col-form-label">Balance</label>
+                                <label class="col-sm-12 col-md-2 col-form-label">Balance </label>
                                 <div class="col-sm-12 col-md-10">
                                     <input
                                             class="form-control"
@@ -278,10 +300,10 @@
                                 </div>
                             </div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">User Type</label>
+								<label class="col-sm-12 col-md-2 col-form-label">User Type <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<select class="custom-select col-12" name="usertype">
-										<option selected="">Choose...</option>
+										<option selected="" value="">Choose...</option>
 										<option value="customer">Customer</option>
 										<option value="agent">Agent</option>
 									</select>
@@ -353,10 +375,10 @@
 								</div>
 							</div> -->
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Control</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Control <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<select class="custom-select col-12" name="control">
-										<option selected="">Choose...</option>
+										<option selected="" value="">Choose...</option>
 										<option value="win">Win</option>
 										<option value="lose">Lose</option>
 										<option value="random">Random</option>
@@ -364,10 +386,10 @@
 								</div>
 							</div>
                             <div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Status</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Status <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<select class="custom-select col-12" name="status">
-										<option selected="">Choose...</option>
+										<option selected="" value="">Choose...</option>
 										<option value="pending">Pending</option>
 										<option value="confirm">Confirm</option>
 									</select>
@@ -563,6 +585,7 @@
 			</div>
 		</div>
 		<!-- welcome modal start -->
+            <script src="src/scripts/func.js"></script>
 		<!--- footer --->
 		<?php include('footer.php'); ?>
 		<!-------------->

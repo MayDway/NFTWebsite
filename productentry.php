@@ -122,7 +122,7 @@
 						</div>
 						<form method="post" id="productForm" enctype="multipart/form-data">
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Product Title</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Product Title <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<input
 										class="form-control"
@@ -133,7 +133,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Product Name</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Product Name <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<input
 										class="form-control"
@@ -144,19 +144,19 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Product Photo</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Product Photo <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<input type="file" id="p_image" name="image" class="form-control">
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Description</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Description <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<textarea name="desc" class="form-control"></textarea>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-12 col-md-2 col-form-label">Price</label>
+								<label class="col-sm-12 col-md-2 col-form-label">Price <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<input
 										class="form-control"

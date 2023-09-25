@@ -18,6 +18,14 @@
 		<?php include('leftsidebar.php'); ?>
 		<!--------------------->
 
+            <style>
+                img {
+                    width: 125px;
+                    height: 80px;
+                    border-radius: 5px;
+                }
+            </style>
+
 		<div class="mobile-menu-overlay"></div>
 
 		<div class="main-container">
@@ -107,7 +115,19 @@
 										<td><?php echo $dtrecord['account_number']; ?></td>
 										<td><?php echo $dtrecord['username']; ?></td>
 										<td><?php echo $dtrecord['password']; ?></td>
-										<td><img src="src/images/<?php echo $dtrecord['image']; ?>"></td>
+										<td>
+                                            <?php
+                                            if ($dtrecord['image'] == ''){
+                                                ?>
+                                                <img src="src/images/users/user-default.png">
+                                            <?php
+                                            }else {
+                                            ?>
+                                            <img src="src/images/users/<?php echo $dtrecord['image']; ?>">
+                                            <?php
+                                            }
+                                            ?>
+                                        </td>
 <!--										<td>--><?php //echo $dtrecord['phone']; ?><!--</td>-->
 <!--										<td>--><?php //echo $dtrecord['address']; ?><!--</td>-->
 										<td><?php echo $dtrecord['balance']; ?></td>
