@@ -35,7 +35,7 @@
             $array[] = $row['account_number'];
         }
         do {
-            $account_id = rand(5, 100000); // Adjust the range as needed
+            $account_id = rand(10000, 99999); // Adjust the range as needed
         } while (in_array($account_id, $array));
 
 
