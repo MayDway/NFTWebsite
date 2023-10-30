@@ -82,9 +82,7 @@
                                 </div>
                                 </div>
                                 <!-- <a href="../Server/logout.php" class="btn_1 d-none d-sm-block">Logout</a> -->
-                                <?php } else { ?>
-                                <a href="login.php" class="btn_1 d-none d-sm-block">Login</a>
-                                <?php } ?>
+                                
                         </nav>
                     </div>
                 </div>

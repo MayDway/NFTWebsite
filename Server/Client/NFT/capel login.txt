@@ -1,0 +1,4 @@
+ControlPanelName: Plesk-WebAdmin
+Password : Nftsadmin@123
+
+150.95.90.50
