@@ -34,7 +34,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="logo"> </a>
+                        <a class="navbar-brand" href="index.php"> <img src="img/logo.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -43,20 +43,20 @@
                          <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Home</a>
+                                        <a class="nav-link" href="index.php">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="market.html">Market</a>
+                                        <a class="nav-link" href="market.php">Market</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="cs.html">Customer Service</a>
+                                        <a class="nav-link" href="cs.php">Customer Service</a>
                                     </li>
                                 <li class="nav-item">
-                                        <a class="nav-link" href="term.html">Terms & Condition</a>
+                                        <a class="nav-link" href="term.php">Terms & Condition</a>
                                     </li>
 
                                  <li class="nav-item">
-                                        <a class="nav-link" href="qanda.html">Q & A</a>
+                                        <a class="nav-link" href="qanda.php">Q & A</a>
                                     </li>
 
                                     <li class="nav-item dropdown">
@@ -65,13 +65,34 @@
                                     <li class="nav-item dropdown">
 
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                            <a class="dropdown-item" href="elements.html">Customer Service</a>
+                                            <a class="dropdown-item" href="elements.php">Customer Service</a>
                                         </div>
                                     </li>
                                    
                                 </ul>
                             </div>
-                           <a href="#" class="btn_1 d-none d-sm-block">Login</a>
+                           <!-- <a href="#" class="btn_1 d-none d-sm-block">Login</a> -->
+                           <?php
+                            if(isset($_SESSION['user'])) {
+                            ?>
+                            <div class="btn-group">
+                                <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px">  User Name </button>
+                                <button type="button" class="btn_1 btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="profile.php">Profile Setting</a>
+                                    <!-- <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>-->
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="../logout.php">Logout</a>
+                                </div>
+                                </div>
+                                <!-- <a href="../Server/logout.php" class="btn_1 d-none d-sm-block">Logout</a> -->
+                                <?php } else { ?>
+                                <a href="login.php" class="btn_1 d-none d-sm-block">Login</a>
+                                <?php } ?>
+                           
                     </nav>
                 </div>
             </div>
@@ -86,7 +107,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner text-center">
                         <div class="breadcrumb_iner_item">
-                            <h3>Login</h3>
+                            <h3>Create Account</h3>
                         </div>
                     </div>
                 </div>
@@ -99,26 +120,44 @@
         <!-- Start Sample Area -->
         <section class="sample-text-area">
             <div class="container box_1170">
-                <h3 class="text-heading">Welcome to NFT</h3>
-                  <p> Haven't created an account yet? <a href="creatacc.html" class="genric-btn primary-border radius">Sign Up</a></p><br>
-              <form action="#">
+                <h3 class="text-heading">Create account</h3>
+                  <p>Already have an account? <a href="login.php" class="genric-btn primary-border radius">Login In</a></p><br>
+
+                  <form action="../register.php" method="post">
                             <div class="mt-10">
-                                <input type="text" name="first_name" placeholder="First Name"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required
+                                <input type="text" placeholder="Name" name="name"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required
                                     class="single-input">
                             </div>
-                           
-                          
                             <div class="mt-10">
-                                <input type="email" name="EMAIL" placeholder="Email address"
+                                <input type="password" placeholder="password [Minimum 6digits]" name="password"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
+                                    class="single-input">
+                            </div>
+                            <div class="mt-10">
+                                <input type="password" placeholder=" Repeat Password" name="confirm_password"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Reply password'" required
+                                    class="single-input">
+                            </div>
+                            <div class="mt-10">
+                                <input type="email" name="email" placeholder="Email" 
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required
                                     class="single-input">
                             </div>
                             
-                           <div class="form-group mt-3">
-                        <button type="submit" class="button button-contactForm btn_1">Login </button>
+                             <div class="mt-10">
+                                <input type="number" name="phone" placeholder="Phone "
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'" required
+                                    class="single-input">
+                            </div>
+                            
+
+                             <div class="form-group mt-3">
+                        <button type="submit" name="register" class="button button-contactForm btn_1">Register </button>
                      </div>
                         </form>
+
+           
             </div>
         </section>
         <!-- End Sample Area -->

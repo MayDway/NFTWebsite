@@ -34,7 +34,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg navbar-light">
-                            <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="logo"> </a>
+                            <a class="navbar-brand" href="index.php"> <img src="img/logo.png" alt="logo"> </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
@@ -44,20 +44,20 @@
                           <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Home</a>
+                                        <a class="nav-link" href="index.php">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="market.html">Market</a>
+                                        <a class="nav-link" href="market.php">Market</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="cs.html">Customer Service</a>
+                                        <a class="nav-link" href="cs.php">Customer Service</a>
                                     </li>
                                 <li class="nav-item">
-                                        <a class="nav-link" href="term.html">Terms & Condition</a>
+                                        <a class="nav-link" href="term.php">Terms & Condition</a>
                                     </li>
 
                                  <li class="nav-item">
-                                        <a class="nav-link" href="qanda.html">Q & A</a>
+                                        <a class="nav-link" href="qanda.php">Q & A</a>
                                     </li>
 
                                     <li class="nav-item dropdown">
@@ -66,13 +66,34 @@
                                     <li class="nav-item dropdown">
 
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                            <a class="dropdown-item" href="elements.html">Elements</a>
+                                            <a class="dropdown-item" href="elements.php">Elements</a>
                                         </div>
                                     </li>
                                    
                                 </ul>
                             </div>
-                             <a href="#" class="btn_1 d-none d-sm-block">Login</a>
+                             <!-- <a href="#" class="btn_1 d-none d-sm-block">Login</a> -->
+                             <?php
+                            if(isset($_SESSION['user'])) {
+                            ?>
+                            <div class="btn-group">
+                                <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px">  User Name </button>
+                                <button type="button" class="btn_1 btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="profile.php">Profile Setting</a>
+                                    <!-- <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>-->
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="../logout.php">Logout</a>
+                                </div>
+                                </div>
+                                <!-- <a href="../Server/logout.php" class="btn_1 d-none d-sm-block">Logout</a> -->
+                                <?php } else { ?>
+                                <a href="login.php" class="btn_1 d-none d-sm-block">Login</a>
+                                <?php } ?>
+                            
                         </nav>
                     </div>
                 </div>
