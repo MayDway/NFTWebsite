@@ -11,8 +11,16 @@
 		$mainpage='productlist.php';
 		break;
 
+		case 'productedit':
+		$mainpage='productedit.php';
+		break;
+
 		case 'userentry':
 		$mainpage='userentry.php';
+		break;
+
+		case 'useredit':
+		$mainpage='useredit.php';
 		break;
 
 		case 'productlist':

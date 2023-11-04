@@ -182,7 +182,7 @@
 													<a class="dropdown-item" href="#"
 														><i class="dw dw-eye"></i> View</a
 													>
-													<a class="dropdown-item" href="#"
+													<a class="dropdown-item" href="index.php?page=useredit&action=edit&editid=<?php echo $dtrecord['id'];?>"
 														><i class="dw dw-edit2"></i> Edit</a
 													>
 													<!-- edit md -->
