@@ -106,7 +106,7 @@
                                         <a class="nav-link" href="market.php">Market</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="cs.php">Customer Service</a>
+                                        <a class="nav-link" href="../chatroom.php">Customer Service</a>
                                     </li>
                                 <li class="nav-item">
                                         <a class="nav-link" href="term.php">Terms & Condition</a>
@@ -203,7 +203,7 @@
 
                                 <table>
                    <tr>
-                       <td><input type="number" name="amount" placeholder="Amount"
+                       <td><input type="number" name="amount" placeholder="Amount" min=0
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Amount'" required
                                     class="single-input-primary" id="amount"> </td>
                        <td><div class="button-group-area mt-40">
