@@ -8,6 +8,12 @@
         $rowproduct=mysqli_fetch_assoc($selectproduct);
             
     }
+    if(@$_SESSION['userid']!="")
+    {
+        @$userid=$_SESSION['userid'];
+        $sql_run1=mysqli_query($conn,"SELECT * FROM `user` WHERE id='$userid'");
+        $row1 = mysqli_fetch_array($sql_run1);
+    }
 ?>
 <!doctype html>
 <html lang="zxx">
@@ -197,10 +203,12 @@
                    <a style="cursor: pointer;" class="genric-btn primary small" id="am1" onclick="addamount(1000)">1000</a>
                  <a style="cursor: pointer;" class="genric-btn success small" id="am2" onclick="addamount(5000)">5000</a>
                    <a style="cursor: pointer;" class="genric-btn info small" id="am3" onclick="addamount(10000)">10000</a>
-                    <a style="cursor: pointer;" class="genric-btn link small" onclick="addamount()">All</a>
+                    <a style="cursor: pointer;" class="genric-btn link small" onclick="addamount(document.getElementById('balance').textContent)">All</a>
                  
-                </div></td>
-                   </tr>
+                </div>
+                <input type="text" name="control" id="control" value="<?php echo @$row1['control']; ?>">
+                </td>
+            </tr>
                </table>
                             </div>
                      </form>
@@ -208,7 +216,7 @@
                       <div class="mt-10">
                             <table class="table w-75">
                    <tr>
-                       <td><h6>Available Balance：<span id="balance">1000</span></h6>
+                       <td><h6>Available Balance：<span id="balance"><?php echo @$row1['balance']; ?></span></h6>
                         <?php
                             
                             if(@$_SESSION['userid']!="")
@@ -251,7 +259,7 @@
                         ?>   
 
                     </td>
-                       <td><h6>Handling fee：0%</h6>   
+                       <td><h6>Handling fee：<?php echo @$row1['income']; ?>%</h6>   
                         <?php
                             
                             if(@$_SESSION['userid']!="")
@@ -314,7 +322,8 @@
              <div class="card-body">
         Amount : <span id="am"></span><br>
         Holding Time : <span id="holding"></span><br>
-        Income : <span id="income"></span><br>
+        Income : <span id="income"></span><br><br>
+        <h3><span id="control"></span></h3>
       </div>
       <div class="card-footer">
         <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
@@ -339,7 +348,7 @@
         Amount : <span id="amnext"></span><br>
         Holding Time : <span id="holding1"></span><br>
         Income : <span id="income1"></span><br>
-        
+         <h3><span id="controluser"></span></h3>
       </div>
       <div class="card-footer">
         <button type="button" class="btn btn-secondary" onclick="closeModal1()">Close</button>
@@ -413,6 +422,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> NFTs 
             var balance=document.getElementById('balance').textContent;
             var income = document.getElementById("income");
             income.textContent = Math.floor(Math.random(balance,100000) * 1000000);
+
+            var controluser=document.getElementById('control').value;
+            var control = document.getElementById("controluser");
+            control.textContent = controluser;
 
             
             const selectedSeconds = parseInt(secondsSelect.value, 10);
