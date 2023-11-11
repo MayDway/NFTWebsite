@@ -339,97 +339,41 @@ session_start();
                     </div>
                 </div>
                 <div class="row justify-content-center">
+                    <!-- edit md -->  
+                <?php
+                    $saprod=mysqli_query($conn,"SELECT * FROM products Order By product_id DESC LIMIT 4");
+                    while($dtrecord=mysqli_fetch_assoc($saprod))
+                        {
+                ?>
                     <div class="col-lg-3 col-sm-6">
 
-                        <div class="single_pricing_part">
-                            
-                            <div class="col-sm-6 col-lg-3">
-                            <div class="single_footer_part">
-                                <p>Bride Alice</p>
-                             </div>
-
-                             <div>
-                          <img src="img/game/Bride Alice.gif">
-                                         
-                    </div>
-                        </div>
-                            <ul>
-                                <li>@Tap Fantasy</li>
-                                <li>Price : 792.09 USDT</li>
-                              
-                            </ul>
-                            <a href="trade.php" class="btn_2">Trade</a>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-3 col-sm-6">
 
                         <div class="single_pricing_part">
                             
-                            <div class="col-sm-6 col-lg-3">
+                            <div class="col-sm-12">
                             <div class="single_footer_part">
-                                <p>Skeleton Back</p>
+                                <p><?php echo $dtrecord['title']; ?></p>
                              </div>
 
-                             <div>
-                          <img src="img/game/Skeleton Back.png">
+                             <div class="d-sm-block">
+                          <img src="../src/images/products/<?php echo $dtrecord['image']; ?>" class="w-100" style="height:150px;">
                                          
                     </div>
                         </div>
+                        
                             <ul>
-                                <li>@Skeleton Back#155</li>
-                                <li>Price : 1582.4  USDT</li>
+                                <li><?php echo $dtrecord['name']; ?></li>
+                                <li>Price : <?php echo $dtrecord['price']; ?> USDT</li>
                               
                             </ul>
-                            <a href="elements.php" class="btn_2">Trade</a>
+                            <a href="trade.php?product=<?php echo $dtrecord['product_id']; ?>" class="btn_2">Trade</a>
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-sm-6">
-
-                        <div class="single_pricing_part">
-                            
-                            <div class="col-sm-6 col-lg-3">
-                            <div class="single_footer_part">
-                                <p>Archon</p>
-                             </div>
-
-                             <div>
-                          <img src="img/game/Archon.jpg">
-                                         
-                    </div>
-                        </div>
-                            <ul>
-                                <li>@Archon</li>
-                                <li>Price : 1263.4 USDT</li>
-                              
-                            </ul>
-                            <a href="elements.php" class="btn_2">Trade</a>
-                        </div>
-                    </div>
-
-                   <div class="col-lg-3 col-sm-6">
-
-                        <div class="single_pricing_part">
-                            
-                            <div class="col-sm-6 col-lg-3">
-                            <div class="single_footer_part">
-                                <p>GE#02232</p>
-                             </div>
-
-                             <div>
-                          <img src="img/game/GE.jpg">
-                                         
-                    </div>
-                        </div>
-                            <ul>
-                                <li>GE#02232</li>
-                                <li>Price : 335.7 USDT</li>
-                              
-                            </ul>
-                            <a href="elements.php" class="btn_2">Trade</a>
-                        </div>
-                    </div>
+                    <?php
+                        }
+                    ?>
+                    <!-- end md -->
                 </div>
             </div>
         </section>

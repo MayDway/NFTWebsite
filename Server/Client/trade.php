@@ -1,3 +1,14 @@
+<?php
+    include("../connection/db.php");
+    session_start();
+    if(@$_REQUEST['product']!="")
+    {
+        $product_id=$_REQUEST['product'];
+        $selectproduct=mysqli_query($conn,"SELECT * FROM products WHERE product_id='$product_id'");
+        $rowproduct=mysqli_fetch_assoc($selectproduct);
+            
+    }
+?>
 <!doctype html>
 <html lang="zxx">
 
@@ -25,6 +36,37 @@
     <link rel="stylesheet" href="css/slick.css">
     <!-- style CSS -->
     <link rel="stylesheet" href="css/style.css">
+
+
+    
+    <style>
+        /* Add your modal styling here */
+        #myModal {
+            display: none;
+            width: 25%;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        #myModal1 {
+            display: none;
+            width: 25%;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+    </style>
 </head>
 
 <body>
@@ -117,40 +159,45 @@
             <div class="container box_1170">
                <div class="row">
                         <div class="col-md-3">
-                            <img src="img/game/apes.png" alt="" class="img-fluid">
+                            <img src="../src/images/products/<?php echo $rowproduct['image']; ?>" alt="" class="w-100" style="height: 250px;">
                         </div>
                         <div class="col-md-9 mt-sm-20">
-                            <h6>Apes Together Strong</h6>
-                            <p align="justify">The origin of the Apes Together Strong NFT (ATSNFT) ecosystem. A collection of 4,444 uniquely generated apes on the Ethereum blockchain. Your ape is a member of our community. Send your Genesis ATSNFT via "Looking Glass" to our Rise of the Planet of the Apes (ROTA) series launching in Q1 2023. Visit the Official OpenSea Collection below to purchase one of three "Looking Glass" Nano Banana Tokens: Nano Banana: Common || Nano Bunch: Rare || Nano Crate: Super Rare ||</p><br>
-                            <h6> Price : 1107.8 USDT </h6> <br>
+                            <h6><?php echo $rowproduct['title']; ?></h6>
+                            <p align="justify"><?php echo $rowproduct['description']; ?></p><br>
+                            <h6> Price : <?php echo $rowproduct['price']; ?> USDT </h6> <br>
 
                            <form action="#">
                             
                             <div class="input-group-icon mt-10">
                                 <div class="icon"><i class="fa fa-clock" aria-hidden="true"></i></div>
                                 <div class="form-select" id="default-select">
-                                    <select>
-                                        <option value=" 1">Holding Time</option>
-                                        <option value="1">30s/Income5% / 20-99999999</option>
-                                        <option value="1">60s/Income10% / 5000-99999999</option>
-                                        <option value="1">120s/Income15% / 20000-99999999</option>
-                                        <option value="1">150s/Income20% / 100000-99999999</option>
+                                    <select name="secondsSelect" id="secondsSelect">
+                                        <option value="">Holding Time</option>
+                                        <option value="30">30s/Income5% / 20-99999999</option>
+                                        <option value="60">60s/Income10% / 5000-99999999</option>
+                                        <option value="120">120s/Income15% / 20000-99999999</option>
+                                        <option value="150">150s/Income20% / 100000-99999999</option>
                                     </select>
                                 </div>
                             </div>
-                            
+                            <script type="text/javascript">
+                                function addamount(val)
+                                {
+                                    document.getElementById('amount').value=val;
+                                }
+                            </script>
                             <div class="mt-10">
 
                                 <table>
                    <tr>
-                       <td><input type="number" name="first_name" placeholder="Amount"
+                       <td><input type="number" name="amount" placeholder="Amount"
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Amount'" required
-                                    class="single-input-primary"> </td>
+                                    class="single-input-primary" id="amount"> </td>
                        <td><div class="button-group-area mt-40">
-                   <a href="#" class="genric-btn primary small">1000</a>
-                 <a href="#" class="genric-btn success small">5000</a>
-                   <a href="#" class="genric-btn info small">10000</a>
-                    <a href="#" class="genric-btn link small">All</a>
+                   <a style="cursor: pointer;" class="genric-btn primary small" id="am1" onclick="addamount(1000)">1000</a>
+                 <a style="cursor: pointer;" class="genric-btn success small" id="am2" onclick="addamount(5000)">5000</a>
+                   <a style="cursor: pointer;" class="genric-btn info small" id="am3" onclick="addamount(10000)">10000</a>
+                    <a style="cursor: pointer;" class="genric-btn link small" onclick="addamount()">All</a>
                  
                 </div></td>
                    </tr>
@@ -159,42 +206,149 @@
                      </form>
                         
                       <div class="mt-10">
-                            <table>
+                            <table class="table w-75">
                    <tr>
-                       <td width="70%"><h6>Available Balance：0</h6>
-                        <button type="button" class="genric-btn buy circle arrow" data-toggle="modal" data-target="#exampleModalCenter">
+                       <td><h6>Available Balance：<span id="balance">1000</span></h6>
+                        <?php
+                            
+                            if(@$_SESSION['userid']!="")
+                            {
+
+
+                            @$userid=$_SESSION['userid'];
+                            $sql_run=mysqli_query($conn,"SELECT * FROM `user` WHERE id='$userid'");
+                            $row = mysqli_fetch_array($sql_run);
+                            if(@$row['status']=='pending' || @$row['status']=='no')
+                            {
+                        ?>
+                        <button type="button" class="genric-btn buy circle arrow" onclick="alert('Please Pay For getting the Income!!');">
                         Buy Up
                         </button>
+                        <?php
+                            }
+                             
+                        else
+                        {
 
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title blacktext" id="exampleModalLongTitle">Buy Up</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Amount : <br>
-        Holding Time : <br>
-        Income : <br>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+                        ?>
+                           <!---------->
+   
+                        <button type="button" class="genric-btn buy circle arrow" onclick="openModal()">
+                            Buy Up
+                        </button>
+                            <?php
+                                }
+                            }
+                            else
+                            {   
+                            
+                            ?>
+                              <button type="button" class="genric-btn buy circle arrow" onclick="alert('Please Pay For getting the Income!!');">
+                        Buy Up
+                        </button>
+                        <?php
+                    }
+                        ?>   
+
                     </td>
-                       <td><h6>Handling fee：0%</h6>       
-                    <a href="#" class="genric-btn buydown circle arrow">Buy Down<span
-                            class="lnr lnr-arrow-right"></span></a></td>
+                       <td><h6>Handling fee：0%</h6>   
+                        <?php
+                            
+                            if(@$_SESSION['userid']!="")
+                            {
+
+
+                            @$userid=$_SESSION['userid'];
+                            $sql_run=mysqli_query($conn,"SELECT * FROM `user` WHERE id='$userid'");
+                            $row = mysqli_fetch_array($sql_run);
+                            if(@$row['status']=='pending' || @$row['status']=='no')
+                            {
+                        ?>
+                        <button type="button" class="genric-btn buy circle arrow" onclick="alert('Please Pay For getting the Income!!');">
+                        Buy Down
+                        </button>
+                        <?php
+                            }
+                             
+                        else
+                        {
+
+                        ?>
+                           <!---------->
+   
+                        <button type="button" class="genric-btn buy circle arrow" onclick="openModal1()">
+                                Buy Down
+                            </button>
+                            <?php
+                                }
+                            }
+                            else
+                            {   
+                            
+                            ?>
+                              <button type="button" class="genric-btn buy circle arrow" onclick="alert('Please Pay For getting the Income!!');">
+                        Buy Down
+                        </button>
+                        <?php
+                    }
+                        ?> 
+                        </td>
+
+
                    </tr>
                </table>
                    </div>
+
+
+
+    <!-- Buy Up Model -->
+        <!-- Modal -->
+    <div id="myModal">
+        <div class="card">
+            <div class="card-header">
+              <button class="close" onclick="closeModal()"><span aria-hidden="true">&times;</span></button>
+        <h5 class="text-heading text-dark" id="">Buy Up</h5>
+        <canvas id="pieChart" width="200" height="200" class="mx-auto"></canvas>
+            </div>
+           
+             <div class="card-body">
+        Amount : <span id="am"></span><br>
+        Holding Time : <span id="holding"></span><br>
+        Income : <span id="income"></span><br>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+        </div>
+        
+    </div>
+ <!-------------->
+
+ <!-- Buy Down Model -->
+        <!-- Modal -->
+    <div id="myModal1">
+        <div class="card">
+            <div class="card-header">
+              <button class="close" onclick="closeModal1()"><span aria-hidden="true">&times;</span></button>
+        <h5 class="text-heading text-dark" id="">Buy Down</h5>
+        <canvas id="pieChart1" width="200" height="200" class="mx-auto"></canvas>
+            </div>
+           
+             <div class="card-body">
+        Amount : <span id="amnext"></span><br>
+        Holding Time : <span id="holding1"></span><br>
+        Income : <span id="income1"></span><br>
+        
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal1()">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+        </div>
+        
+    </div>
+    <!---------------------->
 
                
         </section>
@@ -234,6 +388,132 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> NFTs 
         </footer>
         <!--::footer_part end::-->
     </div>
+<!-- Buy Up Modal -->
+   <script>
+        
+        const modal = document.getElementById('myModal');
+        const modal1 = document.getElementById('myModal1');
+        const secondsSelect = document.getElementById('secondsSelect');
+        const pieChartCanvas = document.getElementById('pieChart');
+        const pieChartCanvas1 = document.getElementById('pieChart1');
+        const ctx = pieChartCanvas.getContext('2d');
+        const ctx1 = pieChartCanvas1.getContext('2d');
+
+        // Function to open the modal and update the pie chart
+        function openModal() {
+
+            var amountval = document.getElementById("amount").value;
+            var am = document.getElementById("am");
+            am.textContent = amountval;
+
+            var holdingsec = document.getElementById("secondsSelect").value;
+            var holding = document.getElementById("holding");
+            holding.textContent = holdingsec + " Seconds";
+
+            var balance=document.getElementById('balance').textContent;
+            var income = document.getElementById("income");
+            income.textContent = Math.floor(Math.random(balance,100000) * 1000000);
+
+            
+            const selectedSeconds = parseInt(secondsSelect.value, 10);
+
+            // Update the pie chart
+            updatePieChart(selectedSeconds);
+
+            // Display the modal
+            modal.style.display = 'block';
+        }
+        function openModal1() {
+
+            var amountval = document.getElementById("amount").value;
+            var amnext = document.getElementById("amnext");
+            amnext.textContent = amountval;
+
+            var holdingsec = document.getElementById("secondsSelect").value;
+            var holding1 = document.getElementById("holding1");
+            holding1.textContent = holdingsec + " Seconds";
+
+            var balance=document.getElementById('balance').textContent;
+            var income1 = document.getElementById("income1");
+            income1.textContent = Math.floor(Math.random(0,balance) * 1000000);
+
+            const selectedSeconds = parseInt(secondsSelect.value, 10);
+
+            // Update the pie chart
+            updatePieChart1(selectedSeconds);
+
+            // Display the modal
+            modal1.style.display = 'block';
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+        function closeModal1() {
+            modal1.style.display = 'none';
+        }
+
+        // Function to update the pie chart based on selected seconds
+        function updatePieChart(seconds) {
+            const data = {
+                labels: ['remaining',seconds + 's'],
+                datasets: [{
+                    data: [seconds, 150 - seconds],
+                    backgroundColor: ['#FF6384', '#36A2EB'],
+                }],
+            };
+
+            const options = {
+                cutoutPercentage: 80,
+                responsive: false,
+            };
+
+            // Destroy previous chart if it exists
+            if (window.myPie) {
+                window.myPie.destroy();
+            }
+
+            // Create a new pie chart
+            window.myPie = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: options,
+            });
+        }
+
+        function updatePieChart1(seconds) {
+            const data = {
+                labels: ['remaining',seconds + 's'],
+                datasets: [{
+                    data: [seconds, 150 - seconds],
+                    backgroundColor: ['#FF6384', '#36A2EB'],
+                }],
+            };
+
+            const options = {
+                cutoutPercentage: 80,
+                responsive: false,
+            };
+
+            // Destroy previous chart if it exists
+            if (window.myPie) {
+                window.myPie.destroy();
+            }
+
+            // Create a new pie chart
+            window.myPie = new Chart(ctx1, {
+                type: 'doughnut',
+                data: data,
+                options: options,
+            });
+        }
+    </script>
+
+    <!----- --------->
+
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- jquery plugins here-->
     <script src="js/jquery-1.12.1.min.js"></script>

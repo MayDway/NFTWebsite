@@ -18,6 +18,7 @@ if(isset($_POST["login"])){
         if($row['status']!='pending')
         {
             $_SESSION['user'] = $row['username'];
+            $_SESSION['userid'] = $row['id']; // add md //
             echo "<script>alert('Successfully Logined....');</script>";
             echo "<script>window.location.href='Client/index.php';</script>";
         }
