@@ -15,10 +15,11 @@ if(isset($_POST["login"])){
     $sql = "SELECT * FROM `user` WHERE email = '$email'";
     $sql_run1 = mysqli_query($conn, $sql);
     $c = mysqli_num_rows($sql_run1);
-    var_dump($c);
+    // var_dump($c);
     // var_dump($sql);
     $row = mysqli_fetch_array($sql_run1);
     $user_id = $row["id"];
+    $username = $row["username"];
     // var_dump($row["password"]);
 
     
@@ -41,7 +42,7 @@ if(isset($_POST["login"])){
         // add md //
         if($row['status']!='pending')
         {
-            // $_SESSION['user'] = $row['username'];
+            $_SESSION['user'] = $username;
 
             $user_token = md5(uniqid());
             $_SESSION['user_id'] = $user_id;
@@ -63,9 +64,9 @@ if(isset($_POST["login"])){
         
     }else{
         echo "<script>alert('Email or Password is incorrect....');</script>";
-        var_dump($password);
-        var_dump($row['password']);
-        // echo "<script>window.location.href='Client/login.php';</script>";
+        // var_dump($password);
+        // var_dump($row['password']);
+        echo "<script>window.location.href='Client/login.php';</script>";
     }
 
 }

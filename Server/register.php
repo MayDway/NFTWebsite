@@ -38,6 +38,7 @@ if(isset($_POST["register"])){
 
     $sql_run1 = mysqli_query($conn,"SELECT * FROM `user` WHERE email = '$email'");
     $row = mysqli_num_rows($sql_run1);
+
     if ($row > 1) {
         echo "<script>alert('This email is already registered!!!');</script>";
     } else {

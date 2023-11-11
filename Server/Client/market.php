@@ -1,3 +1,14 @@
+<?php
+include("../connection/db.php");
+session_start();
+if (isset($_SESSION["user_id"])) {
+$id = $_SESSION["user_id"];
+$sql = "SELECT * FROM `user` WHERE id='$id'";
+$result = mysqli_query($conn, $sql);
+$res = mysqli_fetch_array($result);
+$user_name = $res["username"];
+}
+?>
 <!doctype html>
 <html lang="zxx">
 
@@ -50,14 +61,14 @@
                                         <a class="nav-link" href="market.php">Market</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="cs.php">Customer Service</a>
+                                        <a class="nav-link" href="../chatroom.php">Customer Service</a>
                                     </li>
                                 <li class="nav-item">
-                                        <a class="nav-link" href="team.php">Terms & Condition</a>
+                                        <a class="nav-link" href="term.php">Terms & Condition</a>
                                     </li>
 
                                  <li class="nav-item">
-                                        <a class="nav-link" href="team.php">Q & A</a>
+                                        <a class="nav-link" href="qanda.php">Q & A</a>
                                     </li>
 
                                     <li class="nav-item dropdown">
@@ -73,10 +84,10 @@
                                 </ul>
                             </div>
                             <?php
-                            if(isset($_SESSION['user'])) {
+                            if(isset($_SESSION['user_id'])) {
                             ?>
                             <div class="btn-group">
-                                <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px">  User Name </button>
+                                <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px"><?php echo $user_name; ?></button>
                                 <button type="button" class="btn_1 btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
@@ -155,7 +166,7 @@
                                 <li>Price : 792.09 USDT</li>
                               
                             </ul>
-                            <a href="elements.php" class="btn_2">Trade</a>
+                            <a href="trade.php" class="btn_2">Trade</a>
                         </div>
                     </div>
                     
@@ -178,7 +189,7 @@
                                 <li>Price : 1582.4  USDT</li>
                               
                             </ul>
-                            <a href="elements.php" class="btn_2">Trade</a>
+                            <a href="trade.php" class="btn_2">Trade</a>
                         </div>
                     </div>
 
@@ -201,7 +212,7 @@
                                 <li>Price : 1263.4 USDT</li>
                               
                             </ul>
-                            <a href="elements.php" class="btn_2">Trade</a>
+                            <a href="trade.php" class="btn_2">Trade</a>
                         </div>
                     </div>
 
@@ -224,7 +235,7 @@
                                 <li>Price : 335.7 USDT</li>
                               
                             </ul>
-                            <a href="elements.php" class="btn_2">Trade</a>
+                            <a href="trade.php" class="btn_2">Trade</a>
                         </div>
                     </div>
 

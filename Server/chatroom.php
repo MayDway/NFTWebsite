@@ -9,6 +9,7 @@ $sql = "SELECT * FROM `user` WHERE id = '$idd'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 $type = $row["usertype"];
+$user_name = $row["username"];
 // if (!isset($_SESSION["user_id"]) || $type == 'customer') {
 //     header('location:Client/cs.php');
 // }
@@ -111,20 +112,20 @@ $type = $row["usertype"];
                             <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.php">Home</a>
+                                        <a class="nav-link" href="Client/index.php">Home</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="market.php">Market</a>
+                                        <a class="nav-link" href="Client/market.php">Market</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="cs.php">Customer Service</a>
+                                        <a class="nav-link" href="chatroom.php">Customer Service</a>
                                     </li>
                                 <li class="nav-item">
-                                        <a class="nav-link" href="term.php">Terms & Condition</a>
+                                        <a class="nav-link" href="Client/term.php">Terms & Condition</a>
                                     </li>
 
                                  <li class="nav-item">
-                                        <a class="nav-link" href="qanda.php">Q & A</a>
+                                        <a class="nav-link" href="Client/qanda.php">Q & A</a>
                                     </li>
 
                                     <li class="nav-item dropdown">
@@ -133,7 +134,7 @@ $type = $row["usertype"];
                                     <li class="nav-item dropdown">
 
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                            <a class="dropdown-item" href="elements.php">Elements</a>
+                                            <a class="dropdown-item" href="Client/elements.php">Elements</a>
                                         </div>
                                     </li>
                                    
@@ -143,7 +144,7 @@ $type = $row["usertype"];
                             if(isset($_SESSION['user_id'])) {
                             ?>
                             <div class="btn-group">
-                                <button type="button" class="btn_1 btn-sm"><img src="Client/img/user-header.png" width="20px" height="20px">  User Name </button>
+                                <button type="button" class="btn_1 btn-sm"><img src="Client/img/user-header.png" width="20px" height="20px"><?php echo $user_name; ?></button>
                                 <button type="button" class="btn_1 btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>

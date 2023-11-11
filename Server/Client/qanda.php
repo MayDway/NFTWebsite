@@ -1,3 +1,14 @@
+<?php
+include("../connection/db.php");
+session_start();
+if (isset($_SESSION["user_id"])) {
+$id = $_SESSION["user_id"];
+$sql = "SELECT * FROM `user` WHERE id='$id'";
+$result = mysqli_query($conn, $sql);
+$res = mysqli_fetch_array($result);
+$user_name = $res["username"];
+}
+?>
 <!doctype html>
 <html lang="zxx">
 
@@ -67,8 +78,11 @@
                                    
                                 </ul>
                             </div>
+                            <?php 
+                            if(isset($_SESSION['user_id'])) {
+                            ?>
                             <div class="btn-group">
-                                <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px">  User Name </button>
+                                <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px"><?php echo $user_name; ?></button>
                                 <button type="button" class="btn_1 btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>

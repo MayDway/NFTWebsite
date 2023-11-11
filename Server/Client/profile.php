@@ -1,3 +1,70 @@
+<?php
+session_start();
+include("../connection/db.php");
+
+
+    @$userid=$_SESSION['userid'];
+    $sql_run=mysqli_query($conn,"SELECT * FROM `user` WHERE id='$userid'");
+    $length = mysqli_num_rows($sql_run);
+    $row = mysqli_fetch_array($sql_run);
+
+ if(isset($_POST['btnrevise']))
+ {
+        
+        $oldpassword=mysqli_real_escape_string($conn, $_POST['oldpassword']);
+        $newpassword=mysqli_real_escape_string($conn, $_POST['newpassword']);
+        $newconfpassword=mysqli_real_escape_string($conn, $_POST['newconfpassword']);
+        
+
+            if($oldpassword == $row['password']){
+                $updateuser=mysqli_query($conn,"UPDATE user SET password='$newpassword' WHERE id='$userid'");
+
+                if($updateuser)
+                {
+                    echo "<script>alert('Your Password Has Been Changed!!')</script>";
+
+                }
+                
+            }
+            else
+            {
+                     echo "<script>alert('Your Old Password is not correct!!')</script>";
+            }
+        
+  }   
+
+if(isset($_POST['btnverify']))
+{
+    $idtype=mysqli_real_escape_string($conn, $_POST['idtype']);
+    $idcardno=mysqli_real_escape_string($conn, $_POST['idcardno']);
+    $profile = $_FILES['profile']['name'];
+    $frontimg = $_FILES['frontimg']['name'];
+    $backimg = $_FILES['backimg']['name'];
+    
+    $tmp_img1 = $_FILES['profile']['tmp_name'];
+    $tmp_img2 = $_FILES['frontimg']['tmp_name'];
+    $tmp_img3 = $_FILES['backimg']['tmp_name'];
+
+    $target_dir = "../src/images/users/";
+    $target_file1 = $target_dir . basename($_FILES['profile']['name']);
+    $target_file2 = $target_dir . basename($_FILES['frontimg']['name']);
+    $target_file3 = $target_dir . basename($_FILES['backimg']['name']);
+
+    $updatimg=mysqli_query($conn,"UPDATE user SET ID_type='$idtype',Card_ID_No='$idcardno',image='$profile',Front_image='$frontimg',Back_image='$backimg' WHERE id='$userid'");
+
+    move_uploaded_file($tmp_img1, $target_file1);
+    move_uploaded_file($tmp_img2, $target_file2);
+    move_uploaded_file($tmp_img3, $target_file3);
+
+    if($updatimg)
+    {
+        echo "<script>alert('Thank You!! Please Wait For Verifying Your ID!!');
+        window.location.href='profile.php';
+                </script>";
+    }
+}
+?>
+
 <!doctype html>
 <html lang="zxx">
 
@@ -51,7 +118,7 @@
                                         <a class="nav-link" href="market.php">Market</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="cs.php">Customer Service</a>
+                                        <a class="nav-link" href="../chatroom.php">Customer Service</a>
                                     </li>
                                 <li class="nav-item">
                                         <a class="nav-link" href="term.php">Terms & Condition</a>
@@ -126,26 +193,50 @@
         <section class="Latest_War padding_top">
             
                <div class="whole-wrap">
+                
             <div class="container box_1170">
                <div class="row">
+                <!-- edit md -->
+                <script>
+                    function getimagefile()
+                    {
+                        var profileimg=document.querySelector('.profile');
+                        // console.log(profileimg.value);
+                        document.getElementById('profileimg').value=profileimg.value;
+                        var fReader = new FileReader();
+                        fReader.readAsDataURL(profileimg.files[0]);
+                        fReader.onloadend = function(event)
+                        {
+                            var img = document.getElementById("profileimage");
+                            img.src = event.target.result;
+
+                        }                  
+                        // document.getElementById('profileimage').src=profileimg.value;
+                        // window.location.href='profile.php?profile='+profileimg;
+                    }
+                </script>
                         <div class="col-md-3">
-                            <img src="img/userprofile.jpg" alt="" class="img-fluid">
+                            <form action="#" method="post" enctype="multipart/form-data">
+                            <img src="../src/images/users/<?php echo $row['image']; ?>" alt="" class="w-100" id="profileimage" style="height: 280px;">
                           <br>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile">
+                                <input type="file" class="custom-file-input profile" id="customFile" onchange="getimagefile()" name="profile">
+                                <input type="hidden" class="single-input" id="profileimg">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                               </div>
                             <div class="pplabel">
-                              <h6>Account : Cho002 / 631900</h6>
+                              <h6>Account : <?php echo @$row['username']; ?> / <?php echo @$row['account_number']; ?></h6>
                               </div>
                               <div class="pplabel">
                               <h6>USDT : 156250</h6>
                             </div>
                             
                         </div>
+                        <!-- end -->
                         <div class="col-md-9 mt-sm-20">
                             
   <!-- Nav tabs -->
+ 
   <ul class="nav nav-tabs">
     <li class="nav-item">
       <a class="nav-link active" data-toggle="tab" href="#verified">Verified</a>
@@ -164,69 +255,74 @@
       </li>
   </ul>
 
+
   <!-- Tab panes -->
   <div class="tab-content">
     <div id="verified" class="container tab-pane active"><br>
       <h3>Verified</h3>
-      <form action="#">
+      <!-- start form -->
+      
         <div class="mt-10">
-            <input type="text" name="first_name" placeholder="July"
+            <input type="text" name="first_name" placeholder="<?php echo @$row['email'] ?>"
                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'July'" disabled
-                class="single-input">
+                class="single-input" readonly>
         </div>
         <div class="mt-10">
             <div class="form-select" id="default-select">
-                <select>
-                    <option value=" 1">ID Card</option>
-                    <option value="1">Dhaka</option>
-                    <option value="1">Dilli</option>
-                    <option value="1">Newyork</option>
-                    <option value="1">Islamabad</option>
+                <select name="idtype">
+                    <option value="">Choose ID Card</option>
+                    <option value="NRC">NRC</option>
+                    <option value="Passport">Passport</option>
+                    <option value="Driving Licence">Driving Licence</option>
+                    <option value="Career ID">Career ID</option>
                 </select>
             </div>
         </div>
         <div class="mt-10">
-            <input type="type" name="number" placeholder="Number"
-                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required
+            <input type="text" name="idcardno" placeholder="ID Card Number"
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'ID Number....'" required
                 class="single-input">
         </div>
         <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFile">
+            <input type="file" class="custom-file-input" name="frontimg">
             <label class="custom-file-label" for="customFile">ID Front</label>
           </div>
           <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFile">
+            <input type="file" class="custom-file-input" name="backimg">
             <label class="custom-file-label" for="customFile">ID Back</label>
           </div>
 
          <div class="form-group mt-3">
-    <button type="submit" class="button button-contactForm btn_1">Submit </button>
+    <button type="submit" class="button button-contactForm btn_1" name="btnverify">Submit </button>
  </div>
     </form>
+    <!--  end form -->
     </div>
+     <!-- edit md -->
     <div id="chngpassword" class="container tab-pane fade"><br>
       <h3>Change Password</h3>
-      <form action="#">
+      <form action="" method="post">
        <div class="mt-10">
-            <input type="password" name="last_name" placeholder="Old Password"
+            <input type="password" name="oldpassword" placeholder="Old Password"
                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
                 class="single-input">
         </div>
         <div class="mt-10">
-            <input type="password" name="last_name" placeholder="New password [Minimum 6digits]"
+            <input type="password" name="newpassword" placeholder="New password [Minimum 6digits]"
                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
                 class="single-input">
         </div>
         <div class="mt-10">
-            <input type="password" name="last_name" placeholder=" Repeat Password"
+            <input type="password" name="newconfpassword" placeholder=" Repeat Password"
                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Reply password'" required
                 class="single-input">
         </div>
         <div class="form-group mt-3">
-    <button type="submit" class="button button-contactForm btn_1">Revise </button>
+    <button type="submit" class="button button-contactForm btn_1" name="btnrevise">Revise </button>
  </div>
     </form>
     </div>
+    <!-- end md -->
     <div id="rechange" class="container tab-pane fade"><br>
         <div class="quote-wrapper">
             <div class="quotes">

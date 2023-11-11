@@ -81,12 +81,12 @@
 
 
 		
-			$inspd=mysqli_query($conn,"UPDATE user SET account_number='$account_id',usertype='$usertype',username='$username_id',image='$image',email='$email',password='$password',balance='$balance',top_score='$topscore',income='$income',outcome='$outcome',status='$status' WHERE id='$edid'"); // edit //
+			$inspd=mysqli_query($conn,"UPDATE user SET account_number='$account_id',usertype='$usertype',username='$username_id',image='$image',password='$password',balance='$balance',top_score='$topscore',income='$income',outcome='$outcome',status='$status' WHERE id='$edid'"); // edit //
 			
 		}
 		else
 		{
-			$inspd=mysqli_query($conn,"UPDATE user SET account_number='$account_id',usertype='$usertype',username='$username_id',image='$oldimage',email='$email',password='$password',balance='$balance',top_score='$topscore',income='$income',outcome='$outcome',status='$status' WHERE id='$edid'"); // edit //
+			$inspd=mysqli_query($conn,"UPDATE user SET account_number='$account_id',usertype='$usertype',username='$username_id',image='$oldimage',password='$password',balance='$balance',top_score='$topscore',income='$income',outcome='$outcome',status='$status' WHERE id='$edid'"); // edit //
 		}
 			
 			if($inspd)
@@ -213,7 +213,7 @@
 								<?php }else{ ?>
 								<img src="" id="previewImage" class="rounded-circle" alt="Preview">
 								<?php } ?>
-								<!-- <p class="mb-30">All bootstrap element classies</p> -->
+								<p class="mb-30">User Profile Image</p>
 							</div>
 							<!-- <div class="pull-right">
 								<a
@@ -271,6 +271,7 @@
 									/>
 								</div>
 							</div>
+							
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label"
 									>Photo <span style="color: red;"> *</span></label
@@ -280,7 +281,74 @@
 									<input type="hidden" value="<?php echo $rowuser['image']; ?>" name="oldimage">
 									
 								</div>
+
 							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">ID Type <span style="color: red;"> *</span></label>
+								<div class="col-sm-12 col-md-10">
+									<select class="custom-select col-12" name="idtype">
+										<?php
+											if($rowuser['ID_type']!="")
+											{
+											?>
+											<option value="<?php echo $rowuser['ID_type'] ?>"><?php echo $rowuser['ID_type']; ?></option>
+											<?php
+											}
+										?>
+										<option value="NRC">NRC</option>
+                    <option value="Passport">Passport</option>
+                    <option value="Driving Licence">Driving Licence</option>
+                    <option value="Career ID">Career ID</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label"
+									>ID Card Number <span style="color: red;"> *</span></label
+								>
+								<div class="col-sm-12 col-md-10">
+									<input
+										class="form-control"
+                                        autocomplete="off"
+										type="text"
+										name="idcardno" value="<?php echo $rowuser['Card_ID_No']; ?>"
+									/>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label"
+									>ID Front Image <span style="color: red;"> *</span></label
+								>
+								<div class="col-sm-12 col-md-10">
+
+									<?php if($rowuser['Front_image']!=""){ ?>
+									<img src="src/images/users/<?php echo $rowuser['Front_image']; ?>" id="" class="userimage" alt="Preview">
+									<?php }else{ ?>
+									<img src="" id="previewImage" class="" alt="Preview">
+									<?php } ?>
+									<input type="file" id="imageInput" name="frontimg" class="form-control">
+									<input type="hidden" value="<?php echo $rowuser['Front_image']; ?>" name="foldimage">
+									
+								</div>
+
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label"
+									>ID Back Image <span style="color: red;"> *</span></label
+								>
+								<div class="col-sm-12 col-md-10">
+									<?php if($rowuser['Back_image']!=""){ ?>
+									<img src="src/images/users/<?php echo $rowuser['Back_image']; ?>" id="" class="userimage" alt="Preview">
+									<?php }else{ ?>
+									<img src="" id="previewImage" class="" alt="Preview">
+									<?php } ?>
+									<input type="file" id="imageInput" name="brontimg" class="form-control">
+									<input type="hidden" value="<?php echo $rowuser['Back_image']; ?>" name="boldimage">
+									
+								</div>
+
+							</div>
+
 <!--							<div class="form-group row">-->
 <!--								<label class="col-sm-12 col-md-2 col-form-label">Account Number</label>-->
 <!--								<div class="col-sm-12 col-md-10">-->
@@ -452,6 +520,7 @@
 										
 										<option value="pending">Pending</option>
 										<option value="confirm">Confirm</option>
+										<option value="no">No</option>
 									</select>
 								</div>
 							</div>
