@@ -56,7 +56,24 @@ session_start();
                                         <a class="nav-link" href="market.php">Market</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="cs.php">Customer Service</a>
+                                        <?php
+                                            if(isset($_SESSION['user_id'])){
+                                                $login_id = $_SESSION['user_id'];
+                                                $sql = "SELECT * FROM `user` WHERE id = '$login_id'";
+                                                $run = mysqli_query($conn, $sql);
+                                                $row = mysqli_fetch_array($run);
+                                                $type = $row["usertype"];
+                                                echo "<a class='nav-link' href='../chatroom.php'>Customer Service</a>";
+                                                // if($type == "agent"){
+                                                //     echo "<a class='nav-link' href='../Server/chatroom.php'>Customer Service</a>";
+                                                // }elseif($type == "customer"){
+                                                //     echo "<a class='nav-link' href='cs.php'>Customer Service</a>";
+                                                // }
+                                            } else{
+                                                echo "<a class='nav-link' href='cs.php'>Customer Service</a>";
+                                            }
+                                            ?>
+                                        <!-- // <a class="nav-link" href="cs.php">Customer Service</a> -->
                                     </li>
                                 <li class="nav-item">
                                         <a class="nav-link" href="term.php">Terms & Condition</a>
@@ -79,7 +96,7 @@ session_start();
                                 </ul>
                             </div>
                             <?php
-                            if(isset($_SESSION['user'])) {
+                            if(isset($_SESSION['user_id'])) {
                             ?>
                             <div class="btn-group">
                                 <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px">  User Name </button>
