@@ -96,10 +96,14 @@ session_start();
                                 </ul>
                             </div>
                             <?php
+                            // if(isset($_SESSION['user_id'])) {
+                            
+                            // <!-- <div class="btn-group">
+                            //     <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px">  User Name </button> -->
                             if(isset($_SESSION['user_id'])) {
                             ?>
                             <div class="btn-group">
-                                <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px">  User Name </button>
+                                <button type="button" class="btn_1 btn-sm"><img src="img/user-header.png" width="20px" height="20px"> <?php echo $_SESSION['user']; ?> </button>
                                 <button type="button" class="btn_1 btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>

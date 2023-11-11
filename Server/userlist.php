@@ -1,4 +1,19 @@
-			<!-- header.php -->
+		<!-- edit md -->
+<?php
+	if(@$_REQUEST['did']!="" && @$_REQUEST['action']=='delete')
+	{
+		$delete_id=$_REQUEST['did'];
+		$d=mysqli_query($conn,"DELETE FROM user WHERE id = '$delete_id'");
+		if($d)
+		{
+			echo "<script>alert('Successfully Deleted One Record!!');
+			window.location.href='index.php?page=userlist'</script>";
+		}
+	}
+?>
+<!-- edit md -->
+
+		<!-- header.php -->
             <?php include('header.php'); ?>
 		<!--------------->
 
@@ -25,6 +40,18 @@
                     border-radius: 5px;
                 }
             </style>
+
+            <!-- add md -->
+		 <script type="text/javascript">
+            function deleteconfirm(uid) {
+                var c = confirm("Are you sure you want to delete?");
+
+                if (c) {
+                    window.location.href = "index.php?page=userlist&action=delete&did=" + uid;
+                }
+            }
+         </script>
+        <!-- end md -->
 
 		<div class="mobile-menu-overlay"></div>
 
@@ -155,12 +182,15 @@
 													<a class="dropdown-item" href="#"
 														><i class="dw dw-eye"></i> View</a
 													>
-													<a class="dropdown-item" href="#"
+													<a class="dropdown-item" href="index.php?page=useredit&action=edit&editid=<?php echo $dtrecord['id'];?>"
 														><i class="dw dw-edit2"></i> Edit</a
 													>
-													<a class="dropdown-item" href="#"
+													<!-- edit md -->
+													<a class="dropdown-item" style="cursor:pointer;"
+                                            onclick="deleteconfirm(<?php echo $dtrecord['id']; ?>)"
 														><i class="dw dw-delete-3"></i> Delete</a
 													>
+													<!--  -->
 												</div>
 											</div>
 										</td>

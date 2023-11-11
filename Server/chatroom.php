@@ -12,6 +12,8 @@ $type = $row["usertype"];
 // if (!isset($_SESSION["user_id"]) || $type == 'customer') {
 //     header('location:Client/cs.php');
 // }
+// include("connection/db.php");
+// session_start();
 
 ?>
 
@@ -576,7 +578,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> NFTs 
                     conn.send(JSON.stringify(data));
                 // }
             })
-
 
         });
     </script>

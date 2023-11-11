@@ -22,6 +22,16 @@
 		<!--------------------->
 
 		<?php
+
+
+		if(@$_REQUEST['action']=='edit' && @$_REQUEST['editid']!="")
+	    {
+	        $edid=$_REQUEST['editid'];
+	        $selectuser=mysqli_query($conn,"SELECT * FROM user WHERE id='$edid'");
+	        $rowuser=mysqli_fetch_assoc($selectuser);
+	        
+	    }
+
 //        $sql = "Select * from `user`";
 //        $sql_run = mysqli_query($conn,$sql);
 
@@ -41,8 +51,9 @@
 
 		
 
-	if(isset($_POST['create']))
+	if($_REQUEST['page']=='useredit' && isset($_POST['btnedit']) && $_REQUEST['action']=='edit')
 	{
+		$edid=$_REQUEST['editid'];
 		$account_no=$_POST['account_no'];
 		$account_id=$_POST['account_id']; // edit md //
 		$password=$_POST['password'];
@@ -50,60 +61,50 @@
 		$phone=$_POST['phone'];
 		$address=$_POST['address'];
 		$balance=$_POST['balance'];
+		$topscore=$_POST['top_score'];
+		$income=$_POST['income'];
+		$outcome=$_POST['outcome'];
 		$status=$_POST['status'];
 		$username_id=$_POST['username_id']; // edit md //
 		$control=$_POST['control'];
+		$oldimage=$_POST['oldimage'];
 
 
 		 $image = $_FILES['image']['name'];
-		 $tmp_img = $_FILES['image']['tmp_name'];
-		 $target_dir = "src/images/users/";
-		 $target_file = $target_dir . basename($_FILES['image']['name']);
-		 move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
 
-		// var_dump($account_no);
-		// var_dump($username);
-		// var_dump($password);
-		// var_dump($usertype);
-		// var_dump($phone);
-		// var_dump($address);
-		// var_dump($balance);
-		// var_dump($status);
-		// $sql = "INSERT INTO `user`(account_number,usertype,username,password,phone,address,balance,top_score,income,outcome,status) Values('$account_no','$usertype','$username','$password','$phone','$address','$balance',0,0,0,'$status')";
-		// var_dump($sql);
-		// exit();
-
-		$sql=mysqli_query($conn,"SELECT * FROM `user` WHERE account_number='$account_id'");
-		$dtrow1=mysqli_num_rows($sql);
-
-		if($dtrow1>0)
+		if($image!="")
 		{
-			echo "<script>alert('This User is already Saved!!');
-			window.location.href='index.php?page=user';
-			</script>";
-		}
+			 $tmp_img = $_FILES['image']['tmp_name'];
+			 $target_dir = "src/images/users/";
+			 $target_file = $target_dir . basename($_FILES['image']['name']);
+			 move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
 
+
+		
+			$inspd=mysqli_query($conn,"UPDATE user SET account_number='$account_id',usertype='$usertype',username='$username_id',image='$image',email='$email',password='$password',balance='$balance',top_score='$topscore',income='$income',outcome='$outcome',status='$status' WHERE id='$edid'"); // edit //
+			
+		}
 		else
 		{
-
-			// $inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,image,password,phone,address,balance,status) Values('$account_no','$usertype','$username','$image','$password','$phone','$address','$balance','$status')");
-			$inspd=mysqli_query($conn,"Insert into `user`(account_number,usertype,username,image,password,balance,status,control) Values('$account_id','$usertype','$username_id','$image','$password','$balance','$status','$control')"); // edit //
-			
-			
-
+			$inspd=mysqli_query($conn,"UPDATE user SET account_number='$account_id',usertype='$usertype',username='$username_id',image='$oldimage',email='$email',password='$password',balance='$balance',top_score='$topscore',income='$income',outcome='$outcome',status='$status' WHERE id='$edid'"); // edit //
+		}
 			
 			if($inspd)
 			{
-				echo "<script>alert('Successfully Saved!');
+				echo "<script>alert('Successfully Updated!');
 				window.location.href='index.php?page=userlist';
 				</script>";
 			}
-		}
+		
 	}
 		?>
 
 		<style>
 			#previewImage{
+				width: 180px;
+				height: 180px;
+			}
+			.userimage{
 				width: 180px;
 				height: 180px;
 			}
@@ -207,8 +208,11 @@
                         <div class="clearfix">
 							<div class="pull-left" id="create">
 								<h4 class="text-blue h4">User Form</h4>
-								<!-- <img id="previewImage" src="src/images/users/user-default.png" class="rounded-circle" alt="Preview Image"> -->
-								<img id="previewImage" class="rounded-circle" alt="Preview Image">
+								<?php if($rowuser['image']!=""){ ?>
+								<img src="src/images/users/<?php echo $rowuser['image']; ?>" id="" class="userimage rounded-circle" alt="Preview">
+								<?php }else{ ?>
+								<img src="" id="previewImage" class="rounded-circle" alt="Preview">
+								<?php } ?>
 								<!-- <p class="mb-30">All bootstrap element classies</p> -->
 							</div>
 							<!-- <div class="pull-right">
@@ -223,21 +227,7 @@
 							</div> -->
 						</div>
 <!--						<form method='POST' id="imageForm" enctype="multipart/form-data">-->
-						<!-- add md -->
-						<?php
-							$sql_run1=mysqli_query($conn,"SELECT MAX(account_number) AS max_id FROM user");
-						// $query = "SELECT MAX(id) AS max_id FROM user";
-						// $result = $mysqli->query($query);
-						$row1 = mysqli_fetch_assoc($sql_run1);
-            				
-						// $row = $result->fetch_assoc();
-						if ($row1['max_id'] === null) {
-						    $next_user_id = 10000;
-						} else {
-						    $next_user_id = $row1['max_id'] + 1;
-						}
-						?>
-						<!-- end md -->
+					
                             <div class="form-group row">
                                 <label class="col-sm-12 col-md-2 col-form-label">Account ID <span style="color: red;"> *</span></label>
                                 <div class="col-sm-12 col-md-10">
@@ -247,7 +237,7 @@
                                             placeholder="Johnny Brown"
                                             name="account_id"
                                             autocomplete="off"
-                                            id="account_id" value="<?php echo $next_user_id; ?>" readonly
+                                            id="account_id" value="<?php echo $rowuser['account_number']; ?>" readonly
                                     />
                                 </div>
                             </div>
@@ -264,7 +254,7 @@
 										placeholder=""
 										name="username_id"
                                         id="account"
-                                        value=""
+                                        value="<?php echo $rowuser['username']; ?>"
 									/>
 								</div>
 							</div>
@@ -275,10 +265,9 @@
 								<div class="col-sm-12 col-md-10">
 									<input
 										class="form-control"
-										value=""
                                         autocomplete="off"
-										type="password"
-										name="password"
+										type="text"
+										name="password" value="<?php echo $rowuser['password']; ?>"
 									/>
 								</div>
 							</div>
@@ -288,6 +277,7 @@
 								>
 								<div class="col-sm-12 col-md-10">
 									<input type="file" id="imageInput" name="image" class="form-control">
+									<input type="hidden" value="<?php echo $rowuser['image']; ?>" name="oldimage">
 									
 								</div>
 							</div>
@@ -309,7 +299,40 @@
                                             class="form-control"
                                             name="balance"
                                             placeholder="Balance"
-                                            type="number"
+                                            type="number" value="<?php echo $rowuser['balance']; ?>"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 col-form-label">Top Score </label>
+                                <div class="col-sm-12 col-md-10">
+                                    <input
+                                            class="form-control"
+                                            name="topscore"
+                                            placeholder="topscore"
+                                            type="number" value="<?php echo $rowuser['top_score']; ?>"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 col-form-label">Income </label>
+                                <div class="col-sm-12 col-md-10">
+                                    <input
+                                            class="form-control"
+                                            name="income"
+                                            placeholder="income"
+                                            type="number" value="<?php echo $rowuser['income']; ?>"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-2 col-form-label">Outcome </label>
+                                <div class="col-sm-12 col-md-10">
+                                    <input
+                                            class="form-control"
+                                            name="outcome"
+                                            placeholder="outcome"
+                                            type="number" value="<?php echo $rowuser['outcome']; ?>"
                                     />
                                 </div>
                             </div>
@@ -317,7 +340,14 @@
 								<label class="col-sm-12 col-md-2 col-form-label">User Type <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<select class="custom-select col-12" name="usertype">
-										<option selected="" value="">Choose...</option>
+										<?php
+											if($rowuser['usertype']!="")
+											{
+											?>
+											<option value="<?php echo $rowuser['usertype'] ?>"><?php echo $rowuser['usertype']; ?></option>
+											<?php
+											}
+										?>
 										<option value="customer">Customer</option>
 										<option value="agent">Agent</option>
 									</select>
@@ -392,7 +422,15 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Control <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<select class="custom-select col-12" name="control">
-										<option selected="" value="">Choose...</option>
+										<?php
+											if($rowuser['control']!="")
+											{
+											?>
+											<option value="<?php echo $rowuser['control'] ?>"><?php echo $rowuser['control']; ?></option>
+											<?php
+											}
+										?>
+										
 										<option value="win">Win</option>
 										<option value="lose">Lose</option>
 										<option value="random">Random</option>
@@ -403,13 +441,21 @@
 								<label class="col-sm-12 col-md-2 col-form-label">Status <span style="color: red;"> *</span></label>
 								<div class="col-sm-12 col-md-10">
 									<select class="custom-select col-12" name="status">
-										<option selected="" value="">Choose...</option>
+										<?php
+											if($rowuser['status']!="")
+											{
+											?>
+											<option value="<?php echo $rowuser['status'] ?>"><?php echo $rowuser['status']; ?></option>
+											<?php
+											}
+										?>
+										
 										<option value="pending">Pending</option>
 										<option value="confirm">Confirm</option>
 									</select>
 								</div>
 							</div>
-							<button type="submit" class="btn btn-success" name="create">Save</button>
+							<button type="submit" class="btn btn-success" name="btnedit">Submit</button>
 							<!-- <a href="">Save</a> -->
 							<!-- <div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">Number</label>

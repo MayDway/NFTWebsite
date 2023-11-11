@@ -1,3 +1,6 @@
+<?php
+    include("../connection/db.php");
+?>
 <!doctype html>
 <html lang="zxx">
 
@@ -124,11 +127,37 @@
                   <p>Already have an account? <a href="login.php" class="genric-btn primary-border radius">Login In</a></p><br>
 
                   <form action="../register.php" method="post">
+                    <!-- edit md -->
+                    <?php
+
+                            $username_id = rand(10000, 99999);
+                            $sql_run1=mysqli_query($conn,"SELECT MAX(account_number) AS max_id FROM user");
+                        // $query = "SELECT MAX(id) AS max_id FROM user";
+                        // $result = $mysqli->query($query);
+                        $row1 = mysqli_fetch_assoc($sql_run1);
+                            
+                        // $row = $result->fetch_assoc();
+                        if ($row1['max_id'] === null) {
+                            $next_user_id = 10000;
+                        } else {
+                            $next_user_id = $row1['max_id'] + 1;
+                        }
+                        ?>
                             <div class="mt-10">
-                                <input type="text" placeholder="Name" name="name"
+                                <input type="text" placeholder="account_id" name="account_id"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required
+                                    class="single-input" value="<?php echo $next_user_id; ?>" readonly>
+                            </div>
+                            <div class="mt-10">
+                                <button type="button" class="account_id btn btn-info" name="account_id" id="username_id">Get ID </button>
+
+                                 <input type="hidden" name="idd" id="idd" value="<?php echo $username_id; ?>">
+                                <input type="text" placeholder="Name" name="name" id="account"
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" required
                                     class="single-input">
+
                             </div>
+                            <!-- end md -->
                             <div class="mt-10">
                                 <input type="password" placeholder="password [Minimum 6digits]" name="password"
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
@@ -227,6 +256,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> NFT O
     <script src="js/mail-script.js"></script>
     <!-- custom js -->
     <script src="js/custom.js"></script>
+    <script src="../src/scripts/func.js"></script>
 </body>
 
 </html>

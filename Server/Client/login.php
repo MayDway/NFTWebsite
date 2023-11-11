@@ -1,3 +1,6 @@
+<?php
+include("../login.php"); 
+?>
 <!doctype html>
 <html lang="zxx">
 

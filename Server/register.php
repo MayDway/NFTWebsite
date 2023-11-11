@@ -1,6 +1,7 @@
 <?php
 include("connection/db.php");
 if(isset($_POST["register"])){
+    $account_id = mysqli_real_escape_string($conn, $_POST['account_id']); // add md //
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $c_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
@@ -19,6 +20,15 @@ if(isset($_POST["register"])){
     } while (in_array($account_id, $array));
 
     $acc_id = $name . $account_id;
+    // $array = [];
+    // while ($row = mysqli_fetch_assoc($sql_run)) {
+    //     $array[] = $row['account_number'];
+    // }
+    // do {
+    //     $account_id = rand(10000, 99999); // Adjust the range as needed
+    // } while (in_array($account_id, $array));
+
+    // $acc_id = $name . $account_id;
 
 
     if ($password != $c_password) {
@@ -32,10 +42,10 @@ if(isset($_POST["register"])){
         echo "<script>alert('This email is already registered!!!');</script>";
     } else {
 
-    $sql = "Insert into `user`(account_number,usertype,username,image,email,password,phone,balance,status,control) Values('$acc_id','customer','$name','','$email','$password','$phone','','pending','random')";
+    $sql = "Insert into `user`(account_number,usertype,username,image,email,password,phone,balance,status,control) Values('$account_id','customer','$name','','$email','$password','$phone','','pending','random')";
     $result = mysqli_query($conn, $sql);
     echo "<script>alert('Successfully Registered....');</script>";
-    echo "<script>window.location.href='Client/login.html';</script>";
+    echo "<script>window.location.href='Client/login.php';</script>";
     }
 
 
