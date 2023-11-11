@@ -86,7 +86,7 @@ $user_name = $row["username"];
 
 		#messages_area
 		{
-			height: 650px;
+			height: 100vh;
 			overflow-y: auto;
 			background-color:#e6e6e6;
 		}
