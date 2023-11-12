@@ -213,7 +213,7 @@
                     <a style="cursor: pointer;" class="genric-btn link small" onclick="addamount(document.getElementById('balance').textContent)">All</a>
                  
                 </div>
-                <input type="text" name="control" id="control" value="<?php echo @$row1['control']; ?>">
+                <input type="hidden" name="control" id="control" value="<?php echo @$row1['control']; ?>">
                 </td>
             </tr>
                </table>
