@@ -285,7 +285,7 @@ $user_name = $row["username"];
                 </div>
                 <div class="col-lg-9 col-md-8 col-sm-7 bg-light" style="border-top-right-radius: 5px;">
                         <br>
-                        <h3 class="text-center text-dark">Realtime One to One Chat App Using Websockets with php</h3>
+                        <h3 class="text-center text-dark">ChatRoom</h3>
                         <hr>
                         <br>
                         <div id="chat_area"></div>
